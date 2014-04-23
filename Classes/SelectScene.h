@@ -12,6 +12,7 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 #include <array>
+#include <iostream>
 
 USING_NS_CC;
 USING_NS_CC_EXT;
@@ -25,21 +26,12 @@ class SelectScene : public Layer
 {
 // var
 private:
-    enum NodeTag {
-        Header    = 10,
-        Footer     = 11,
-        TitleLabel = 12,
-        ButtonNode    = 20,
-        
-        SelectButton = 0,
-        HatenaButton =1,
-    };
     
     enum PageType {
         SelectRouletteType,
         SelectMethod,
         SelectZone,
-        InputMinBet,
+        SelectMinBet,
     };
     
     CC_SYNTHESIZE_READONLY(PageType, _currentPageType, CurrentPageType);
@@ -57,9 +49,7 @@ public:
     
 // func
 private:
-    void _updateView();
-    void _updateTitleLabel();
-    void _updateSelectButton();
+    void _updateView(PageType);
     
 public:
     SelectScene();
@@ -78,8 +68,7 @@ public:
     void doneNextPageCallback(Node* sender);
     void donePreviousPageCallback(Node* sender);
     void finishBattleStartAnim(Node* sender);*/
-
-private:
+    
     //virtual void onEnter();
     /*
     void _setPointLabel();

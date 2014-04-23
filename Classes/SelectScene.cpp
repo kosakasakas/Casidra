@@ -7,7 +7,9 @@
 //
 
 #include "SelectScene.h"
-#import "SelectScene.h"
+#include "Utility.h"
+#include "Params.h"
+#include "NodeTag.h"
 /*#import "MainMenuLayer.h"
 #import "GameLayer.h"
 #import "GameComponentLayer.h"
@@ -15,6 +17,7 @@
 #import "TutorialLayer.h"*/
 
 USING_NS_CC;
+#define ARRAY_LENGTH(array) (sizeof(array) / sizeof(array[0]))
 
 
 SelectScene::SelectScene()
@@ -83,7 +86,7 @@ void SelectScene::donePreviousPageCallback(Node* sender) {
 
 void SelectScene::initScene() {
     // update funcをスケジュールに登録
-    _updateView();
+    _updateView(SelectScene::SelectRouletteType);
 }
 
 /*
@@ -94,17 +97,59 @@ void SelectScene::updatePointBar(float dt)
 }
 */
 
-void SelectScene::_updateView(){
-    _updateSelectButton();
-    _updateTitleLabel();
-}
-
-void SelectScene::_updateSelectButton(){
+void SelectScene::_updateView(SelectScene::PageType pageType){
+    auto title = (LabelTTF*) this->getChildByTag(NodeTag_SelectScene::Header)->getChildByTag(NodeTag_Header::TiteLabel);
+    auto desc  = (LabelTTF*) this->getChildByTag(NodeTag_SelectScene::TitleLabel);
     
-}
-
-void SelectScene::_updateTitleLabel(){
+    const char* titleTex;
+    const char* descTex;
+    const char** buttonTexList;
+    int elementNum;
     
+    if(pageType == SelectRouletteType) {
+        titleTex = Text_SelectScene::title_rouletteType;
+        descTex  = Text_SelectScene::desc_rouretteType;
+        buttonTexList = Text_List::rouletteType;
+        elementNum    = Params::RouletteTypeNum;
+    } else if (pageType == SelectMethod) {
+        titleTex = Text_SelectScene::title_betMethod;
+        descTex  = Text_SelectScene::desc_betMethod;
+        buttonTexList = Text_List::method;
+        elementNum    = Params::MethodNum;
+    } else if (pageType == SelectMinBet) {
+        titleTex = Text_SelectScene::title_minBet;
+        descTex  = Text_SelectScene::desc_minBet;
+    } else if (pageType == SelectZone) {
+        titleTex = Text_SelectScene::title_betZone;
+        descTex  = Text_SelectScene::desc_betZone;
+        buttonTexList = Text_List::zone;
+        elementNum    = Params::ZoneNum;
+    } else {
+        titleTex = "none";
+        descTex  = "node";
+        buttonTexList = NULL;
+        elementNum    = 0;
+    }
+    
+    title->setString(titleTex);
+    desc->setString(descTex);
+    if(buttonTexList != NULL) {
+        for (int i = 0; i < MAX_BUTTON_NUM; i++) {
+            auto buttonNode = this->getChildByTag(NodeTag_SelectScene::ButtonNode+i);
+            auto button = (ControlButton*) buttonNode->getChildByTag(NodeTag_SelectScene::SelectButton);
+            auto hatena = (ControlButton*) buttonNode->getChildByTag(NodeTag_SelectScene::HatenaButton);
+            auto label = (LabelTTF*) buttonNode->getChildByTag(NodeTag_SelectScene::ButtonLabel);
+            if (i < elementNum) {
+                label->setString(buttonTexList[i]);
+                button->setVisible(true);
+                hatena->setVisible(true);
+            } else {
+                label->setString("");
+                button->setVisible(false);
+                hatena->setVisible(false);
+            }
+        }
+    }
 }
 
 /*
@@ -356,3 +401,4 @@ bool SelectScene::_calcPointConsumption( int column ) {
     }
 }
  */
+

@@ -11,7 +11,7 @@
 
 #include <iostream>
 #include "cocos2d.h"
-#include "RouletteConfig.h"
+#include "Params.h"
 
 class BetMethodModel {
 // var
@@ -26,7 +26,7 @@ public:
     BetMethodModel();
     virtual ~BetMethodModel();
     virtual std::vector<int> getBetableZone();
-    virtual BetZone getRecomendZone();
+    virtual Params::BetZone getRecomendZone();
 };
 
 #endif /* defined(__Casidra__BetModel__) */
