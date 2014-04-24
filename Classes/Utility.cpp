@@ -7,8 +7,16 @@
 //
 
 #include "Utility.h"
+#include <ctype.h>
 
-Scene* Utility::getCurrentScene(){
-    auto director = Director::getInstance();
-    return director->getRunningScene();
+bool Utility::isDecimalValue(const char* text) {
+    int i = 0;
+    while (text[i] != '\0' ) {
+        if (text[i] == '.' || isdigit(text[i])) {
+            i++;
+        } else {
+            return false;
+        }
+    }
+    return (i > 0) ? true : false;
 }

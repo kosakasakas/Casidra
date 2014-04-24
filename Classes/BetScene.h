@@ -1,13 +1,13 @@
 //
-//  SelectScene.h
+//  BetScene.h
 //  Casidra
 //
 //  Created by Takahiro Kosaka on 2014/01/04.
 //
 //
 
-#ifndef __Casidra__SelectScene__
-#define __Casidra__SelectScene__
+#ifndef __Casidra__BetScene__
+#define __Casidra__BetScene__
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
@@ -21,23 +21,23 @@ USING_NS_CC_EXT;
 #define MAX_BUTTON_NUM 6
 #define MAX_PAGE_NUM 16
 
-class SelectScene : public Layer
+class BetScene : public Layer
 , public CCBSelectorResolver
 {
 private:
-    void _updateView(Type::SelectScenePage pageType);
+    void _updateView(Type::BetScenePage pageType);
     void _clearView();
     void _addNumericEditBox();
     void _setUpEditBox(const char* placeHolder);
     
 public:
-    SelectScene();
-    virtual ~SelectScene();
+    BetScene();
+    virtual ~BetScene();
     void initScene(); // ccbiをreadした後によぶこと！
     
-    CC_SYNTHESIZE_READONLY(Type::SelectScenePage, _currentPageType,  CurrentPageType);
-    CC_SYNTHESIZE_READONLY(Type::SelectScenePage, _nextPageType,     NextPageType);
-    CC_SYNTHESIZE_READONLY(Type::SelectScenePage, _previousPageType, PreviousPageType);
+    CC_SYNTHESIZE_READONLY(Type::BetScenePage, _currentPageType,  CurrentPageType);
+    CC_SYNTHESIZE_READONLY(Type::BetScenePage, _nextPageType,     NextPageType);
+    CC_SYNTHESIZE_READONLY(Type::BetScenePage, _previousPageType, PreviousPageType);
     
     virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(Object* pTarget, const char* pSelectorName);
     virtual Control::Handler onResolveCCBCCControlSelector(Object * pTarget, const char* pSelectorName);
@@ -46,20 +46,20 @@ public:
     void tappedSelectButton(Object* pSender,   Control::EventType pControlEventType);
     void tappedHatenaButton(Object* pSender,   Control::EventType pControlEventType);
     
-    CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(SelectScene, create);
+    CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(BetScene, create);
 };
 
 //
 // Loader
 //
-class SelectSceneLoader : public cocos2d::extension::LayerLoader
+class BetSceneLoader : public cocos2d::extension::LayerLoader
 {
 public:
-    CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(SelectSceneLoader, loader);
+    CCB_STATIC_NEW_AUTORELEASE_OBJECT_METHOD(BetSceneLoader, loader);
     
 protected:
-    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(SelectScene);
+    CCB_VIRTUAL_NEW_AUTORELEASE_CREATECCNODE_METHOD(BetScene);
 };
 
 
-#endif /* defined(__Casidra__SelectScene__) */
+#endif /* defined(__Casidra__BetScene__) */

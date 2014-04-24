@@ -41,6 +41,7 @@ namespace Text_EditBox {
     static const char* spriteFileName = "editBox.png";
     static const char* placeHolder_MinBet = "最低ベット額：";
     static const char* placeHolder_ResultNum = "結果：";
+    static const char* submit = "確定";
 }
 
 //

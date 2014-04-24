@@ -18,7 +18,7 @@ class Utility
 {
 private:
 public:
-    static Scene* getCurrentScene();
+    static bool isDecimalValue(const char* text);
 };
 
 #endif /* defined(__Casidra__Utility__) */

@@ -26,6 +26,22 @@ namespace NodeTag_SelectScene {
     };
 }
 //
+// SelectScene
+//
+namespace NodeTag_SelectScene {
+    enum Tag {
+        Header     = 10,
+        Footer     = 11,
+        TitleLabel = 12,
+        EditBox    = 13,
+        ButtonNode = 20,
+        
+        SelectButton = 0,
+        HatenaButton = 1,
+        ButtonLabel  = 2,
+    };
+}
+//
 // Header
 //
 namespace NodeTag_Header {
