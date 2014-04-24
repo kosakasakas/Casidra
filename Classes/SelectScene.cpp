@@ -22,7 +22,9 @@ USING_NS_CC;
 
 
 SelectScene::SelectScene()
-:_currentPageType(SelectRouletteType)
+: _currentPageType(Type::NonePage)
+, _previousPageType(Type::NonePage)
+, _nextPageType(Type::NonePage)
 {
 }
 
@@ -84,8 +86,9 @@ void SelectScene::donePreviousPageCallback(Node* sender) {
 
 void SelectScene::initScene() {
     // update funcをスケジュールに登録
-    _updateView(SelectScene::SelectRouletteType);
-    addNumericEditBox();
+    _addNumericEditBox();
+    _currentPageType = Type::SelectRouletteTypePage;
+    _updateView(_currentPageType);
 }
 
 /*
@@ -96,8 +99,12 @@ void SelectScene::updatePointBar(float dt)
 }
 */
 
-void SelectScene::_updateView(SelectScene::PageType pageType){
+void SelectScene::_updateView(Type::SelectScenePage pageType){
+    _clearView();
+    
     auto title = (LabelTTF*) this->getChildByTag(NodeTag_SelectScene::Header)->getChildByTag(NodeTag_Header::TiteLabel);
+    auto backButton = (LabelTTF*) this->getChildByTag(NodeTag_SelectScene::Header)->getChildByTag(NodeTag_Header::BackButton);
+    backButton->cocos2d::Node::setVisible(true);
     auto desc  = (LabelTTF*) this->getChildByTag(NodeTag_SelectScene::TitleLabel);
     
     const char* titleTex;
@@ -105,20 +112,21 @@ void SelectScene::_updateView(SelectScene::PageType pageType){
     const char** buttonTexList;
     int elementNum;
     
-    if(pageType == SelectRouletteType) {
+    if(pageType == Type::SelectRouletteTypePage) {
         titleTex = Text_SelectScene::title_rouletteType;
         descTex  = Text_SelectScene::desc_rouretteType;
         buttonTexList = Text_List::rouletteType;
         elementNum    = Type::RouletteTypeNum;
-    } else if (pageType == SelectMethod) {
+        _nextPageType = Type::SelectMethodPage;
+    } else if (pageType == Type::SelectMethodPage) {
         titleTex = Text_SelectScene::title_betMethod;
         descTex  = Text_SelectScene::desc_betMethod;
         buttonTexList = Text_List::method;
         elementNum    = Type::MethodNum;
-    } else if (pageType == SelectMinBet) {
+    } else if (pageType == Type::SelectMinBetPage) {
         titleTex = Text_SelectScene::title_minBet;
         descTex  = Text_SelectScene::desc_minBet;
-    } else if (pageType == SelectZone) {
+    } else if (pageType == Type::SelectZonePage) {
         titleTex = Text_SelectScene::title_betZone;
         descTex  = Text_SelectScene::desc_betZone;
         buttonTexList = Text_List::zone;
@@ -129,6 +137,8 @@ void SelectScene::_updateView(SelectScene::PageType pageType){
         buttonTexList = NULL;
         elementNum    = 0;
     }
+    _previousPageType = _currentPageType;
+    _currentPageType  = pageType;
     
     title->setString(titleTex);
     desc->setString(descTex);
@@ -140,12 +150,9 @@ void SelectScene::_updateView(SelectScene::PageType pageType){
             auto label = (LabelTTF*) buttonNode->getChildByTag(NodeTag_SelectScene::ButtonLabel);
             if (i < elementNum) {
                 label->setString(buttonTexList[i]);
+                buttonNode->setVisible(true);
                 button->setVisible(true);
                 hatena->setVisible(true);
-            } else {
-                label->setString("");
-                button->setVisible(false);
-                hatena->setVisible(false);
             }
         }
     }
@@ -271,11 +278,13 @@ void SelectScene::tappedPreviousButton(Object* pSender, Control::EventType pCont
 {
     CCLOG("tappedPreviousButton eventType = %d", pControlEventType);
     AudioManager::playTapEffect();
-    if (_currentPageType == SelectRouletteType) {
+    auto mainScene = (SelectScene*) this->getParent(); // because this node is header.
+    if (mainScene->getPreviousPageType() == Type::NonePage) {
         auto director = Director::getInstance();
         director->popScene();
+    } else {
+        mainScene->_updateView(mainScene->getPreviousPageType());
     }
-    //_animationManager->runAnimationsForSequenceNamedTweenDuration("previousPage", 0);
 }
 
 void SelectScene::tappedSelectButton(Object* pSender, Control::EventType pControlEventType)
@@ -284,13 +293,14 @@ void SelectScene::tappedSelectButton(Object* pSender, Control::EventType pContro
     ControlButton *button = (ControlButton*) pSender;
     int pushedID = button->getParent()->getTag() - NodeTag_SelectScene::ButtonNode;
     
-    if (_currentPageType == SelectRouletteType) {
+    if (_currentPageType == Type::SelectRouletteTypePage) {
         GameController::getInstance()->setRouletteType((Type::RouletteType)pushedID);
-    } else if (_currentPageType == SelectMethod) {
+        _updateView(_nextPageType);
+    } else if (_currentPageType == Type::SelectMethodPage) {
         
-    } else if (_currentPageType == SelectMinBet) {
+    } else if (_currentPageType == Type::SelectMinBetPage) {
         
-    } else if (_currentPageType == SelectZone) {
+    } else if (_currentPageType == Type::SelectZonePage) {
         
     } else {
         
@@ -335,9 +345,7 @@ void SelectScene::tappedHatenaButton(Object* pSender, Control::EventType pContro
      */
 }
 
-void SelectScene::addNumericEditBox() {
-    _clearView();
-    
+void SelectScene::_addNumericEditBox() {
     auto firstButtonNode  = this->getChildByTag(NodeTag_SelectScene::ButtonNode);
     auto secondButtonNode = this->getChildByTag(NodeTag_SelectScene::ButtonNode + 1);
     firstButtonNode->setVisible(true);
@@ -362,6 +370,15 @@ void SelectScene::addNumericEditBox() {
 }
 
 void SelectScene::_clearView() {
+    auto editBox = this->getChildByTag(NodeTag_SelectScene::EditBox);
+    editBox->setVisible(false);
+    
+    auto headerNode = this->getChildByTag(NodeTag_SelectScene::Header);
+    auto nextButton = headerNode->getChildByTag(NodeTag_Header::NextButton);
+    auto backButton = headerNode->getChildByTag(NodeTag_Header::BackButton);
+    nextButton->setVisible(false);
+    backButton->setVisible(false);
+    
     for (int i = 0; i < MAX_BUTTON_NUM; i++) {
         auto buttonNode = this->getChildByTag(NodeTag_SelectScene::ButtonNode+i);
         buttonNode->setVisible(false);

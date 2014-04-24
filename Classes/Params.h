@@ -65,17 +65,26 @@ namespace Type {
         NoZone,
         ZoneNum
     };
-// RouletteType
+    // RouletteType
     enum RouletteType {
         American,
         European,
         RouletteTypeNum
     };
-// Method
+    // Method
     enum Method {
         MonteCarlo,
         Winners,
         MethodNum
+    };
+    // SelectScenePage
+    enum SelectScenePage {
+        SelectRouletteTypePage,
+        SelectMethodPage,
+        SelectZonePage,
+        SelectMinBetPage,
+        NonePage,
+        PageNum
     };
 }
 #endif

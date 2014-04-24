@@ -11,6 +11,7 @@
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
+#include "Params.h"
 #include <array>
 #include <iostream>
 
@@ -25,16 +26,9 @@ class SelectScene : public Layer
 //, public CCBMemberVariableAssigner
 {
 private:
-    
-    enum PageType {
-        SelectRouletteType,
-        SelectMethod,
-        SelectZone,
-        SelectMinBet,
-    };
-    
-    void _updateView(PageType);
+    void _updateView(Type::SelectScenePage pageType);
     void _clearView();
+    void _addNumericEditBox();
     
 public:
     //CC_SYNTHESIZE_READONLY(CCBAnimationManager*, _animationManager, AnimationManager);
@@ -44,7 +38,10 @@ public:
     virtual ~SelectScene();
     void initScene(); // ccbiをreadした後によぶこと！
     
-    CC_SYNTHESIZE_READONLY(PageType, _currentPageType, CurrentPageType);
+    CC_SYNTHESIZE_READONLY(Type::SelectScenePage, _currentPageType, CurrentPageType);
+    CC_SYNTHESIZE_READONLY(Type::SelectScenePage, _nextPageType, NextPageType);
+    CC_SYNTHESIZE_READONLY(Type::SelectScenePage, _previousPageType, PreviousPageType);
+    
     //virtual bool onAssignCCBMemberVariable(Object* pTarget, const char* pMemberVariableName, Node* pNode);
     virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(Object* pTarget, const char* pSelectorName);
     virtual Control::Handler onResolveCCBCCControlSelector(Object * pTarget, const char* pSelectorName);
@@ -54,7 +51,6 @@ public:
     void tappedSelectButton(Object* pSender, Control::EventType pControlEventType);
     void tappedHatenaButton(Object* pSender, Control::EventType pControlEventType);
     
-    void addNumericEditBox();
     
     //CC_SYNTHESIZE(int, _selectedStageID, SelectedStageID);
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(SelectScene, create);
