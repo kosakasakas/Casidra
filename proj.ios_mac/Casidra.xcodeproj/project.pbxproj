@@ -24,6 +24,11 @@
 		145D32311907B8270067B357 /* SelectScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 145D32241907B8270067B357 /* SelectScene.ccbi */; };
 		145D32321907B8270067B357 /* SelectZoneScene.ccbi in Resources */ = {isa = PBXBuildFile; fileRef = 145D32251907B8270067B357 /* SelectZoneScene.ccbi */; };
 		145D32351907C11B0067B357 /* Utility.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 145D32331907C11B0067B357 /* Utility.cpp */; };
+		145D323A1907EEBF0067B357 /* AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 145D32381907EEBF0067B357 /* AudioManager.cpp */; };
+		145D323D1907EF2A0067B357 /* UserData.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 145D323B1907EF2A0067B357 /* UserData.cpp */; };
+		145D32401907F8910067B357 /* GameController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 145D323E1907F8910067B357 /* GameController.cpp */; };
+		14A18A5E1908B8C7006610DD /* BetMethodModelFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 14A18A5C1908B8C7006610DD /* BetMethodModelFactory.cpp */; };
+		14A18A661908DC3D006610DD /* editBox.png in Resources */ = {isa = PBXBuildFile; fileRef = 14A18A651908DC3D006610DD /* editBox.png */; };
 		1ACB3244164770DE00914215 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ACB3243164770DE00914215 /* libcurl.a */; };
 		1AF4C2F417865DCB00122817 /* libbox2d iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AF4C2E317865D9500122817 /* libbox2d iOS.a */; };
 		1AF4C2F517865DCB00122817 /* libchipmunk iOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AF4C2E117865D9500122817 /* libchipmunk iOS.a */; };
@@ -278,6 +283,15 @@
 		145D32331907C11B0067B357 /* Utility.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Utility.cpp; path = ../Classes/Utility.cpp; sourceTree = "<group>"; };
 		145D32341907C11B0067B357 /* Utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Utility.h; path = ../Classes/Utility.h; sourceTree = "<group>"; };
 		145D32361907C6A00067B357 /* NodeTag.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeTag.h; path = ../Classes/NodeTag.h; sourceTree = "<group>"; };
+		145D32381907EEBF0067B357 /* AudioManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AudioManager.cpp; path = ../Classes/AudioManager.cpp; sourceTree = "<group>"; };
+		145D32391907EEBF0067B357 /* AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AudioManager.h; path = ../Classes/AudioManager.h; sourceTree = "<group>"; };
+		145D323B1907EF2A0067B357 /* UserData.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = UserData.cpp; path = ../Classes/UserData.cpp; sourceTree = "<group>"; };
+		145D323C1907EF2A0067B357 /* UserData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = UserData.h; path = ../Classes/UserData.h; sourceTree = "<group>"; };
+		145D323E1907F8910067B357 /* GameController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = GameController.cpp; path = ../Classes/GameController.cpp; sourceTree = "<group>"; };
+		145D323F1907F8910067B357 /* GameController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameController.h; path = ../Classes/GameController.h; sourceTree = "<group>"; };
+		14A18A5C1908B8C7006610DD /* BetMethodModelFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BetMethodModelFactory.cpp; path = ../Classes/BetMethodModelFactory.cpp; sourceTree = "<group>"; };
+		14A18A5D1908B8C7006610DD /* BetMethodModelFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BetMethodModelFactory.h; path = ../Classes/BetMethodModelFactory.h; sourceTree = "<group>"; };
+		14A18A651908DC3D006610DD /* editBox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = editBox.png; sourceTree = "<group>"; };
 		1ACB3243164770DE00914215 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = ../../cocos2dx/platform/third_party/ios/libraries/libcurl.a; sourceTree = "<group>"; };
 		1AF4C2BB17865D9500122817 /* cocos2d_libs.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = cocos2d_libs.xcodeproj; path = ../../../cocos2d_libs.xcodeproj; sourceTree = "<group>"; };
 		1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = AppDelegate.cpp; path = ../Classes/AppDelegate.cpp; sourceTree = "<group>"; };
@@ -395,6 +409,12 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				145D323E1907F8910067B357 /* GameController.cpp */,
+				145D323F1907F8910067B357 /* GameController.h */,
+				145D323B1907EF2A0067B357 /* UserData.cpp */,
+				145D323C1907EF2A0067B357 /* UserData.h */,
+				145D32381907EEBF0067B357 /* AudioManager.cpp */,
+				145D32391907EEBF0067B357 /* AudioManager.h */,
 				145D32041907B8130067B357 /* AppMacros.h */,
 				145D32051907B8130067B357 /* BetMethodModel.cpp */,
 				145D32061907B8130067B357 /* BetMethodModel.h */,
@@ -410,6 +430,8 @@
 				1AFAF8B616D35DE700DB1158 /* HelloWorldScene.h */,
 				145D32331907C11B0067B357 /* Utility.cpp */,
 				145D32341907C11B0067B357 /* Utility.h */,
+				14A18A5C1908B8C7006610DD /* BetMethodModelFactory.cpp */,
+				14A18A5D1908B8C7006610DD /* BetMethodModelFactory.h */,
 			);
 			name = Classes;
 			path = ../classes;
@@ -528,6 +550,7 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				14A18A651908DC3D006610DD /* editBox.png */,
 				145D32191907B8270067B357 /* ccbResources */,
 				145D321A1907B8270067B357 /* fileLookup.plist */,
 				145D321B1907B8270067B357 /* Footer.ccbi */,
@@ -755,6 +778,7 @@
 				145D322A1907B8270067B357 /* InputBetScene.ccbi in Resources */,
 				145D32291907B8270067B357 /* Header.ccbi in Resources */,
 				5087E78017EB970100C73F5D /* Icon-114.png in Resources */,
+				14A18A661908DC3D006610DD /* editBox.png in Resources */,
 				145D32271907B8270067B357 /* fileLookup.plist in Resources */,
 				50EF62A217ECD613001EB2F8 /* Icon-29.png in Resources */,
 				145D322E1907B8270067B357 /* Opening.ccbi in Resources */,
@@ -787,12 +811,16 @@
 				145D320F1907B8130067B357 /* BetMethodModel.cpp in Sources */,
 				503AE10017EB989F00D1A890 /* AppController.mm in Sources */,
 				145D32351907C11B0067B357 /* Utility.cpp in Sources */,
+				145D323A1907EEBF0067B357 /* AudioManager.cpp in Sources */,
+				145D32401907F8910067B357 /* GameController.cpp in Sources */,
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
 				145D322D1907B8270067B357 /* MainScene.js in Sources */,
 				145D32121907B8130067B357 /* SelectScene.cpp in Sources */,
 				145D32101907B8130067B357 /* OpeningLayer.cpp in Sources */,
+				14A18A5E1908B8C7006610DD /* BetMethodModelFactory.cpp in Sources */,
+				145D323D1907EF2A0067B357 /* UserData.cpp in Sources */,
 				1AFAF8B816D35DE700DB1158 /* HelloWorldScene.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

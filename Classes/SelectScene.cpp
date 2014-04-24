@@ -10,6 +10,8 @@
 #include "Utility.h"
 #include "Params.h"
 #include "NodeTag.h"
+#include "AudioManager.h"
+#include "GameController.h"
 /*#import "MainMenuLayer.h"
 #import "GameLayer.h"
 #import "GameComponentLayer.h"
@@ -17,7 +19,6 @@
 #import "TutorialLayer.h"*/
 
 USING_NS_CC;
-#define ARRAY_LENGTH(array) (sizeof(array) / sizeof(array[0]))
 
 
 SelectScene::SelectScene()
@@ -63,13 +64,10 @@ SEL_MenuHandler SelectScene::onResolveCCBCCMenuItemSelector(cocos2d::Object *pTa
 Control::Handler SelectScene::onResolveCCBCCControlSelector(cocos2d::Object *pTarget, const char *pSelectorName)
 {
     CCLOG("name_control = %s", pSelectorName);
-    /*
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedPreviousButton", SelectScene::tappedPreviousButton);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedNextButton", SelectScene::tappedNextButton);
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedBackButton", SelectScene::tappedBackButton);
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "stageButton1_1", SelectScene::tappedStageButton);
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedYesButton", SelectScene::tappedYesButton);
-     */
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedSelectButton", SelectScene::tappedSelectButton);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedHatenaButton", SelectScene::tappedHatenaButton);
     return NULL;
 }
 /*
@@ -87,6 +85,7 @@ void SelectScene::donePreviousPageCallback(Node* sender) {
 void SelectScene::initScene() {
     // update funcをスケジュールに登録
     _updateView(SelectScene::SelectRouletteType);
+    addNumericEditBox();
 }
 
 /*
@@ -110,12 +109,12 @@ void SelectScene::_updateView(SelectScene::PageType pageType){
         titleTex = Text_SelectScene::title_rouletteType;
         descTex  = Text_SelectScene::desc_rouretteType;
         buttonTexList = Text_List::rouletteType;
-        elementNum    = Params::RouletteTypeNum;
+        elementNum    = Type::RouletteTypeNum;
     } else if (pageType == SelectMethod) {
         titleTex = Text_SelectScene::title_betMethod;
         descTex  = Text_SelectScene::desc_betMethod;
         buttonTexList = Text_List::method;
-        elementNum    = Params::MethodNum;
+        elementNum    = Type::MethodNum;
     } else if (pageType == SelectMinBet) {
         titleTex = Text_SelectScene::title_minBet;
         descTex  = Text_SelectScene::desc_minBet;
@@ -123,7 +122,7 @@ void SelectScene::_updateView(SelectScene::PageType pageType){
         titleTex = Text_SelectScene::title_betZone;
         descTex  = Text_SelectScene::desc_betZone;
         buttonTexList = Text_List::zone;
-        elementNum    = Params::ZoneNum;
+        elementNum    = Type::ZoneNum;
     } else {
         titleTex = "none";
         descTex  = "node";
@@ -260,28 +259,45 @@ int SelectScene::_getWorldNo(int stageID) {
 }
 */
 
-/*
+
 void SelectScene::tappedNextButton(Object* pSender, Control::EventType pControlEventType)
 {
     CCLOG("tappedNextButton eventType = %d", pControlEventType);
     AudioManager::playTapEffect();
-    _animationManager->runAnimationsForSequenceNamedTweenDuration("nextPage", 0);
+    //_animationManager->runAnimationsForSequenceNamedTweenDuration("nextPage", 0);
 }
 
 void SelectScene::tappedPreviousButton(Object* pSender, Control::EventType pControlEventType)
 {
     CCLOG("tappedPreviousButton eventType = %d", pControlEventType);
     AudioManager::playTapEffect();
-    _animationManager->runAnimationsForSequenceNamedTweenDuration("previousPage", 0);
+    if (_currentPageType == SelectRouletteType) {
+        auto director = Director::getInstance();
+        director->popScene();
+    }
+    //_animationManager->runAnimationsForSequenceNamedTweenDuration("previousPage", 0);
 }
-*/
 
- /*
-void SelectScene::tappedStageButton(Object* pSender, Control::EventType pControlEventType)
+void SelectScene::tappedSelectButton(Object* pSender, Control::EventType pControlEventType)
 {
+    CCLOG("tappedSelectButton eventType = %d", pControlEventType);
     ControlButton *button = (ControlButton*) pSender;
-    button->setEnabled(true);
-    int stageNo = button->getParent()->getTag() - 100;
+    int pushedID = button->getParent()->getTag() - NodeTag_SelectScene::ButtonNode;
+    
+    if (_currentPageType == SelectRouletteType) {
+        GameController::getInstance()->setRouletteType((Type::RouletteType)pushedID);
+    } else if (_currentPageType == SelectMethod) {
+        
+    } else if (_currentPageType == SelectMinBet) {
+        
+    } else if (_currentPageType == SelectZone) {
+        
+    } else {
+        
+    }
+
+    
+    /*
     _currentPage = ((SelectScene*) this->getParent())->getCurrentPage();
     CCLOG("tappedStageButton eventType = %d", pControlEventType);
     CCLOG("selectedStage is %d-%d", _currentPage, stageNo);
@@ -294,111 +310,60 @@ void SelectScene::tappedStageButton(Object* pSender, Control::EventType pControl
         ssl->getAnimationManager()->runAnimationsForSequenceNamedTweenDuration("default", 0);
         _setSelectSceneTuchEnable(false);
     }
-}
-  */
-/*
-void SelectScene::_setSelectSceneTuchEnable(bool isEnable) {
-    auto pageNode  = this->getChildByTag(PageNode + 1);
-    for ( int column = 0; column < STAGE_NUM; column++ ) {
-        ((ControlButton*)pageNode->getChildByTag(StageNode + column)->getChildByTag(StageButton))->setEnabled(false);
-    }
+     */
 }
 
-void SelectScene::tappedBackButton(Object* pSender, Control::EventType pControlEventType)
+void SelectScene::tappedHatenaButton(Object* pSender, Control::EventType pControlEventType)
 {
-    CCLOG("tappedBackButton eventType = %d", pControlEventType);
-    AudioManager::playTapEffect();
-    auto director = Director::getInstance();
-    director->popScene();
-}
-
-void SelectScene::tappedYesButton(Object* pSender, Control::EventType pControlEventType)
-{
-    CCLOG("tappedYesButton eventType = %d", pControlEventType);
-    AudioManager::playTapEffect();
-    this->setVisible(false);
-}
-
-void SelectScene::startMainSceneCallback() {
-    auto director = Director::getInstance();
-    auto nodeLoaderLibrary = NodeLoaderLibrary::getInstance();
-    nodeLoaderLibrary->registerNodeLoader("MainMenuLayer", SelectSceneLoader::loader());
-    auto ccbReader = new CCBReader(nodeLoaderLibrary);
-    auto node = ccbReader->readNodeGraphFromFile("MainMenu.ccbi");
-    auto scene = Scene::create();
-    if (node != NULL)
-    {
-        scene->addChild(node);
-    }
-    ccbReader->release();
-    
-    director->pushScene(scene);
-}
-
-void SelectScene::startAIGameSceneCallback(int stageID) {
-    auto director = Director::getInstance();
-    auto scene = GameLayer::createAIScene(stageID);
-    GameLayer* gLayer = (GameLayer*) scene->getChildByTag(GameLayer::gameLayerTag);
-    gLayer->setSelectedStageID(stageID);
-    director->replaceScene(scene);
-}
-
-void SelectScene::startTutorialSceneCallback() {
-    auto director = Director::getInstance();
-    NodeLoaderLibrary* nodeLoaderLibrary = NodeLoaderLibrary::getInstance();
-    nodeLoaderLibrary->registerNodeLoader("TutorialLayer", TutorialLayerLoader::loader());
-    CCBReader* ccbReader = new CCBReader(nodeLoaderLibrary);
-    auto node = ccbReader->readNodeGraphFromFile("Tutorial.ccbi");
-    ((TutorialLayer*) node)->initLayer();
-    Scene* scene = Scene::create();
-    if (node != NULL)
-    {
-        scene->addChild(node);
-    }
-    ccbReader->release();
-    director->replaceScene(scene);
-}
-
-void SelectScene::setAnimationManager(CCBAnimationManager* pAnimationManager)
-{
-    CC_SAFE_RELEASE_NULL(_animationManager);
-    _animationManager = pAnimationManager;
-    CC_SAFE_RETAIN(_animationManager);
-}
-
-void SelectScene::_setPointLabel() {
-    auto ud = UserData::getInstance();
-    auto pt = ud->getPointTimer();
-    pt->updatePoint();
-    int currentPoint = pt->getCurrentPoint();
-    int maxPoint = pt->getMaxPoint();
-    char str[16];
-    sprintf(str, "%d / %d", currentPoint, maxPoint);
-    stagePointLabel->setString( str );
-}
-
-void SelectScene::_setPointBarScale() {
-    auto ud = UserData::getInstance();
-    auto pt = ud->getPointTimer();
-    stagePointBarSprite->setScaleX( 1.0 * pt->getPercentage() );
-}
-
-bool SelectScene::_calcPointConsumption( int column ) {
-    auto pageNode  = this->getChildByTag(PageNode+1);
-    auto stageNode = pageNode->getChildByTag(StageNode + column);
-    auto labelNode = stageNode->getChildByTag(PointLabel);
-    String* cns = new String(((LabelTTF*) labelNode)->getString()); // cocos2d::String型 便利過ぎわろた
-    auto ud = UserData::getInstance();
-    auto pt = ud->getPointTimer();
-    if (pt->canPlayGame(cns->intValue())) {
-        pt->reducePoint((cns->intValue()));
-        return true;
-    } else {
-        //auto test = this->getParent()->getChildByTag(SelectSceneNode);
+    CCLOG("tappedHatenaButton eventType = %d", pControlEventType);
+    ControlButton *button = (ControlButton*) pSender;
+    button->setEnabled(true);
+    int stageNo = button->getParent()->getTag() - 100;
+    /*
+    _currentPage = ((SelectScene*) this->getParent())->getCurrentPage();
+    CCLOG("tappedStageButton eventType = %d", pControlEventType);
+    CCLOG("selectedStage is %d-%d", _currentPage, stageNo);
+    if (_calcPointConsumption(stageNo)) {
+        AudioManager::stopBackGroundMusic();
+        AudioManager::playEffect(AudioManager::battleStartEffectFile);
+        _selectedStageID = _getStageID(_currentPage, stageNo);
         SelectScene *ssl = (SelectScene*) this->getParent();
-        ssl->getSelectSceneNode()->setVisible(true);
-        return false;
+        ssl->setSelectedStageID(_selectedStageID);
+        ssl->getAnimationManager()->runAnimationsForSequenceNamedTweenDuration("default", 0);
+        _setSelectSceneTuchEnable(false);
+    }
+     */
+}
+
+void SelectScene::addNumericEditBox() {
+    _clearView();
+    
+    auto firstButtonNode  = this->getChildByTag(NodeTag_SelectScene::ButtonNode);
+    auto secondButtonNode = this->getChildByTag(NodeTag_SelectScene::ButtonNode + 1);
+    firstButtonNode->setVisible(true);
+    secondButtonNode->setVisible(true);
+    
+    auto firstbutton = (ControlButton*) firstButtonNode->getChildByTag(NodeTag_SelectScene::SelectButton);
+    auto secondHatenaButton = (ControlButton*) secondButtonNode->getChildByTag(NodeTag_SelectScene::HatenaButton);
+    firstbutton->setVisible(false);
+    secondHatenaButton->setVisible(false);
+    
+    Size size = Size(firstbutton->getContentSize().width, 0.8*firstbutton->getContentSize().height);
+    auto editBox = EditBox::create(size, Scale9Sprite::create(Text_EditBox::spriteFileName));
+    editBox->setPlaceHolder(Text_EditBox::placeHolder_MinBet);
+    editBox->setMaxLength(8);
+    editBox->setReturnType(KeyboardReturnType::DONE);
+    editBox->setInputMode(EditBox::InputMode::NUMERIC);
+    editBox->setDelegate((EditBoxDelegate*)this);
+    editBox->setPosition(firstbutton->getPosition());
+    editBox->setFontColor(Color3B(0,0,0));
+    editBox->setTag(NodeTag_SelectScene::EditBox);
+    this->addChild(editBox);
+}
+
+void SelectScene::_clearView() {
+    for (int i = 0; i < MAX_BUTTON_NUM; i++) {
+        auto buttonNode = this->getChildByTag(NodeTag_SelectScene::ButtonNode+i);
+        buttonNode->setVisible(false);
     }
 }
- */
-

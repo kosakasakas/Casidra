@@ -17,6 +17,7 @@ namespace NodeTag_SelectScene {
         Header     = 10,
         Footer     = 11,
         TitleLabel = 12,
+        EditBox    = 13,
         ButtonNode = 20,
         
         SelectButton = 0,

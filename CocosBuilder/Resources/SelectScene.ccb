@@ -15,7 +15,7 @@
 	<key>guides</key>
 	<array/>
 	<key>jsControlled</key>
-	<true/>
+	<false/>
 	<key>nodeGraph</key>
 	<dict>
 		<key>baseClass</key>
@@ -137,7 +137,7 @@
 						<key>value</key>
 						<array>
 							<real>50</real>
-							<real>82.208335876464844</real>
+							<real>82</real>
 							<integer>4</integer>
 						</array>
 					</dict>
@@ -317,8 +317,8 @@
 								<string>BlockCCControl</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<integer>0</integer>
+									<string>tappedSelectButton</string>
+									<integer>1</integer>
 									<integer>32</integer>
 								</array>
 							</dict>
@@ -533,8 +533,8 @@
 								<string>BlockCCControl</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<integer>0</integer>
+									<string>tappedHatenaButton</string>
+									<integer>1</integer>
 									<integer>32</integer>
 								</array>
 							</dict>
@@ -955,8 +955,8 @@
 								<string>BlockCCControl</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<integer>0</integer>
+									<string>tappedSelectButton</string>
+									<integer>1</integer>
 									<integer>32</integer>
 								</array>
 							</dict>
@@ -1171,8 +1171,8 @@
 								<string>BlockCCControl</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<integer>0</integer>
+									<string>tappedHatenaButton</string>
+									<integer>1</integer>
 									<integer>32</integer>
 								</array>
 							</dict>
@@ -1593,8 +1593,8 @@
 								<string>BlockCCControl</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<integer>0</integer>
+									<string>tappedSelectButton</string>
+									<integer>1</integer>
 									<integer>32</integer>
 								</array>
 							</dict>
@@ -1933,8 +1933,8 @@
 								<string>BlockCCControl</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<integer>0</integer>
+									<string>tappedHatenaButton</string>
+									<integer>1</integer>
 									<integer>32</integer>
 								</array>
 							</dict>
@@ -2231,8 +2231,8 @@
 								<string>BlockCCControl</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<integer>0</integer>
+									<string>tappedSelectButton</string>
+									<integer>1</integer>
 									<integer>32</integer>
 								</array>
 							</dict>
@@ -2447,8 +2447,8 @@
 								<string>BlockCCControl</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<integer>0</integer>
+									<string>tappedHatenaButton</string>
+									<integer>1</integer>
 									<integer>32</integer>
 								</array>
 							</dict>
@@ -2869,8 +2869,8 @@
 								<string>BlockCCControl</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<integer>0</integer>
+									<string>tappedSelectButton</string>
+									<integer>1</integer>
 									<integer>32</integer>
 								</array>
 							</dict>
@@ -3085,8 +3085,8 @@
 								<string>BlockCCControl</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<integer>0</integer>
+									<string>tappedHatenaButton</string>
+									<integer>1</integer>
 									<integer>32</integer>
 								</array>
 							</dict>
@@ -3507,8 +3507,8 @@
 								<string>BlockCCControl</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<integer>0</integer>
+									<string>tappedSelectButton</string>
+									<integer>1</integer>
 									<integer>32</integer>
 								</array>
 							</dict>
@@ -3847,8 +3847,8 @@
 								<string>BlockCCControl</string>
 								<key>value</key>
 								<array>
-									<string></string>
-									<integer>0</integer>
+									<string>tappedHatenaButton</string>
+									<integer>1</integer>
 									<integer>32</integer>
 								</array>
 							</dict>
@@ -4068,7 +4068,7 @@
 			</dict>
 		</array>
 		<key>customClass</key>
-		<string></string>
+		<string>SelectScene</string>
 		<key>displayName</key>
 		<string>CCLayer</string>
 		<key>memberVarAssignmentName</key>

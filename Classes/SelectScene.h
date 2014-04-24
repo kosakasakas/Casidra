@@ -24,7 +24,6 @@ class SelectScene : public Layer
 , public CCBSelectorResolver
 //, public CCBMemberVariableAssigner
 {
-// var
 private:
     
     enum PageType {
@@ -34,31 +33,33 @@ private:
         SelectMinBet,
     };
     
-    CC_SYNTHESIZE_READONLY(PageType, _currentPageType, CurrentPageType);
+    void _updateView(PageType);
+    void _clearView();
     
 public:
     //CC_SYNTHESIZE_READONLY(CCBAnimationManager*, _animationManager, AnimationManager);
     //CC_SYNTHESIZE_READONLY(Node*, _SelectSceneNode, SelectSceneNode);
     
+    SelectScene();
+    virtual ~SelectScene();
+    void initScene(); // ccbiをreadした後によぶこと！
+    
+    CC_SYNTHESIZE_READONLY(PageType, _currentPageType, CurrentPageType);
     //virtual bool onAssignCCBMemberVariable(Object* pTarget, const char* pMemberVariableName, Node* pNode);
     virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(Object* pTarget, const char* pSelectorName);
     virtual Control::Handler onResolveCCBCCControlSelector(Object * pTarget, const char* pSelectorName);
     //virtual SEL_CallFuncN onResolveCCBCCCallFuncSelector(Object * pTarget, const char* pSelectorName);
+    void tappedPreviousButton(Object* pSender, Control::EventType pControlEventType);
+    void tappedNextButton(Object* pSender, Control::EventType pControlEventType);
     void tappedSelectButton(Object* pSender, Control::EventType pControlEventType);
     void tappedHatenaButton(Object* pSender, Control::EventType pControlEventType);
     
-// func
-private:
-    void _updateView(PageType);
-    
-public:
-    SelectScene();
-    virtual ~SelectScene();
+    void addNumericEditBox();
     
     //CC_SYNTHESIZE(int, _selectedStageID, SelectedStageID);
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(SelectScene, create);
     
-    void initScene(); // ccbiをreadした後によぶこと！
+   
     //void updatePointBar( float dt );
     /*void startMainSceneCallback();
     void startAIGameSceneCallback(int stageID);
