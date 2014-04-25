@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		14327E79190A577D0043533F /* MonteCalroModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 14327E77190A577D0043533F /* MonteCalroModel.cpp */; };
 		145D320F1907B8130067B357 /* BetMethodModel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 145D32051907B8130067B357 /* BetMethodModel.cpp */; };
 		145D32101907B8130067B357 /* OpeningLayer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 145D32071907B8130067B357 /* OpeningLayer.cpp */; };
 		145D32121907B8130067B357 /* SelectScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 145D320C1907B8130067B357 /* SelectScene.cpp */; };
@@ -261,6 +262,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		14327E77190A577D0043533F /* MonteCalroModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MonteCalroModel.cpp; path = ../Classes/MonteCalroModel.cpp; sourceTree = "<group>"; };
+		14327E78190A577D0043533F /* MonteCalroModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MonteCalroModel.h; path = ../Classes/MonteCalroModel.h; sourceTree = "<group>"; };
 		145D32041907B8130067B357 /* AppMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppMacros.h; path = ../Classes/AppMacros.h; sourceTree = "<group>"; };
 		145D32051907B8130067B357 /* BetMethodModel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BetMethodModel.cpp; path = ../Classes/BetMethodModel.cpp; sourceTree = "<group>"; };
 		145D32061907B8130067B357 /* BetMethodModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BetMethodModel.h; path = ../Classes/BetMethodModel.h; sourceTree = "<group>"; };
@@ -414,6 +417,8 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				14327E77190A577D0043533F /* MonteCalroModel.cpp */,
+				14327E78190A577D0043533F /* MonteCalroModel.h */,
 				14A18A671909542E006610DD /* BetScene.cpp */,
 				14A18A681909542E006610DD /* BetScene.h */,
 				145D323E1907F8910067B357 /* GameController.cpp */,
@@ -826,6 +831,7 @@
 				503AE10217EB989F00D1A890 /* RootViewController.mm in Sources */,
 				1AFAF8B716D35DE700DB1158 /* AppDelegate.cpp in Sources */,
 				503AE10117EB989F00D1A890 /* main.m in Sources */,
+				14327E79190A577D0043533F /* MonteCalroModel.cpp in Sources */,
 				145D322D1907B8270067B357 /* MainScene.js in Sources */,
 				145D32121907B8130067B357 /* SelectScene.cpp in Sources */,
 				145D32101907B8130067B357 /* OpeningLayer.cpp in Sources */,
