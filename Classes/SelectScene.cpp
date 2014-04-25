@@ -13,11 +13,7 @@
 #include "AudioManager.h"
 #include "GameController.h"
 #include "Utility.h"
-/*#import "MainMenuLayer.h"
-#import "GameLayer.h"
-#import "GameComponentLayer.h"
-#import "AudioManager.h"
-#import "TutorialLayer.h"*/
+#include "BetScene.h"
 
 USING_NS_CC;
 
@@ -158,7 +154,8 @@ void SelectScene::tappedSelectButton(Object* pSender, Control::EventType pContro
         const char* minBet = editBox->getText();
         if (Utility::isDecimalValue(minBet)) {
             GameController::getInstance()->setMinBetCoin(atof(minBet));
-            _updateView(_nextPageType);
+            //_updateView(_nextPageType);
+            replaceSceneToBetScene();
         } else {
             CCLOG("input value is not decimal.");
         }
@@ -252,4 +249,20 @@ void SelectScene::_setUpEditBox(const char* placeHolder) {
     secondHatenaButton->setVisible(false);
     secondSelectButton->setVisible(true);
     secondButtonLabel->setString(Text_EditBox::submit);
+}
+
+void SelectScene::replaceSceneToBetScene() {
+    auto director = Director::getInstance();
+    NodeLoaderLibrary* nodeLoaderLibrary = NodeLoaderLibrary::getInstance();
+    nodeLoaderLibrary->registerNodeLoader("BetScene", BetSceneLoader::loader());
+    CCBReader* ccbReader = new CCBReader(nodeLoaderLibrary);
+    Node* node = ccbReader->readNodeGraphFromFile("BetScene.ccbi");
+    ((BetScene*)node)->initScene();
+    Scene* scene = Scene::create();
+    if (node != NULL)
+    {
+        scene->addChild(node);
+    }
+    ccbReader->release();
+    director->replaceScene(scene);
 }

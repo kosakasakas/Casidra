@@ -30,12 +30,18 @@ public:
     virtual void setUp(Type::BetZone betZone);
     virtual std::vector<Type::BetZone> getBetableZone();
     virtual float getRecomendBetCoin();
+    virtual const char* getBetMethodStr();
+    virtual const char* getWinRateStr();
+    virtual const char* getCurrentBetZoneStr();
+    virtual const char* getRecomendBetCoinStr();
+    virtual const char* getIncomeStr();
     void updateData(int number);
     
     CC_SYNTHESIZE_READONLY(Type::BetZone, _currentBetZone, CurrentBetZone);
     CC_SYNTHESIZE_READONLY(int, _startGameCount, StartGameCount);
     CC_SYNTHESIZE_READONLY(float, _currentBetCoin, CurrentBetCoin);
     CC_SYNTHESIZE_READONLY(float, _oldBetCoin, OldBetCoin);
+    CC_SYNTHESIZE_READONLY(float, _income, Income);
     CC_SYNTHESIZE_READONLY(int, _winCount, WinCount);
     CC_SYNTHESIZE_READONLY(bool, _isInialized, IsInitialized);
     

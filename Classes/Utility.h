@@ -19,6 +19,7 @@ class Utility
 private:
 public:
     static bool isDecimalValue(const char* text);
+    static const char* getStrFromFloatValue(float val);
 };
 
 #endif /* defined(__Casidra__Utility__) */

@@ -43,6 +43,10 @@ namespace Text_EditBox {
     static const char* placeHolder_ResultNum = "結果：";
     static const char* submit = "確定";
 }
+// config
+namespace Text_Config {
+    static const char* notInitialized = "未設定";
+}
 
 //
 // Types

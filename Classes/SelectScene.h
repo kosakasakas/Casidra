@@ -45,6 +45,7 @@ public:
     void tappedNextButton(    Object* pSender, Control::EventType pControlEventType);
     void tappedSelectButton(Object* pSender,   Control::EventType pControlEventType);
     void tappedHatenaButton(Object* pSender,   Control::EventType pControlEventType);
+    void replaceSceneToBetScene();
     
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(SelectScene, create);
 };

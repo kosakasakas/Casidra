@@ -8,6 +8,7 @@
 
 #include "BetMethodModel.h"
 #include "GameController.h"
+#include "Utility.h"
 
 BetMethodModel::BetMethodModel()
 : _isInialized(false)
@@ -16,6 +17,7 @@ BetMethodModel::BetMethodModel()
 , _oldBetCoin(0.0)
 , _winCount(0)
 , _currentBetZone(Type::NoZone)
+, _income(0.0)
 {
 }
 
@@ -52,7 +54,7 @@ std::vector<Type::BetZone> BetMethodModel::getBetableZone() {
 float BetMethodModel::getRecomendBetCoin() {
     if (!_isInialized) {
         CCLOG("please initialize method model.");
-        return 0;
+        return 0.0;
     }
     
     return GameController::getInstance()->getMinBetCoin();
@@ -102,4 +104,20 @@ void BetMethodModel::win() {
 
 void BetMethodModel::lose() {
     
+}
+
+const char* BetMethodModel::getBetMethodStr() {
+    return Text_Config::notInitialized;
+}
+const char* BetMethodModel::getWinRateStr() {
+    return  Utility::getStrFromFloatValue(getCurrentWinRate());
+}
+const char* BetMethodModel::getCurrentBetZoneStr() {
+    return Text_Config::notInitialized;
+}
+const char* BetMethodModel::getIncomeStr() {
+    return Utility::getStrFromFloatValue(_income);
+}
+const char* BetMethodModel::getRecomendBetCoinStr() {
+    return Utility::getStrFromFloatValue(getRecomendBetCoin());
 }

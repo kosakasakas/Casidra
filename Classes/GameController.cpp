@@ -93,3 +93,7 @@ bool GameController::_isValidSlot(int slotNo) {
     }
     return false;
 }
+
+BetMethodModel* GameController::getMethodModelAt(int slotID) {
+    return _betMethodModelSlot.at(slotID);
+}

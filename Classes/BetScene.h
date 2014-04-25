@@ -25,26 +25,20 @@ class BetScene : public Layer
 , public CCBSelectorResolver
 {
 private:
-    void _updateView(Type::BetScenePage pageType);
-    void _clearView();
-    void _addNumericEditBox();
-    void _setUpEditBox(const char* placeHolder);
+    void _updateView();
     
 public:
     BetScene();
     virtual ~BetScene();
     void initScene(); // ccbiをreadした後によぶこと！
     
-    CC_SYNTHESIZE_READONLY(Type::BetScenePage, _currentPageType,  CurrentPageType);
-    CC_SYNTHESIZE_READONLY(Type::BetScenePage, _nextPageType,     NextPageType);
-    CC_SYNTHESIZE_READONLY(Type::BetScenePage, _previousPageType, PreviousPageType);
-    
     virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(Object* pTarget, const char* pSelectorName);
     virtual Control::Handler onResolveCCBCCControlSelector(Object * pTarget, const char* pSelectorName);
     void tappedPreviousButton(Object* pSender, Control::EventType pControlEventType);
     void tappedNextButton(    Object* pSender, Control::EventType pControlEventType);
-    void tappedSelectButton(Object* pSender,   Control::EventType pControlEventType);
-    void tappedHatenaButton(Object* pSender,   Control::EventType pControlEventType);
+    void tappedEditBetButton(Object* pSender,   Control::EventType pControlEventType);
+    void tappedSettingButton(Object* pSender,   Control::EventType pControlEventType);
+    void tappedFixedButton(Object* pSender,   Control::EventType pControlEventType);
     
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(BetScene, create);
 };

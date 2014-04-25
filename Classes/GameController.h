@@ -35,7 +35,7 @@ public:
     CC_SYNTHESIZE(float, _currentAsset, CurrentAsset);
     CC_SYNTHESIZE_READONLY(std::vector<int>, _resultList, ResultList);
     CC_SYNTHESIZE_READONLY(bool, _isCurrentGameEnded, IsCurrentGameEnded);
-    CC_SYNTHESIZE_READONLY(std::vector<BetMethodModel*>, _betMethodModelSlot, BetMEthodModelSlot);
+    CC_SYNTHESIZE_READONLY(std::vector<BetMethodModel*>, _betMethodModelSlot, BetMethodModelSlot);
     
     void resetAll();
     void resetGame();
@@ -43,6 +43,7 @@ public:
     void startGame();
     void endGame(int resultNumber);
     void setNewMethodModel(int slopNo, Type::Method method);
+    BetMethodModel* getMethodModelAt(int slotID);
 };
 
 #endif /* defined(__Casidra__GameController__) */

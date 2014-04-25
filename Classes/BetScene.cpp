@@ -13,14 +13,12 @@
 #include "AudioManager.h"
 #include "GameController.h"
 #include "Utility.h"
+#include "BetMethodModel.h"
 
 USING_NS_CC;
 
 
 BetScene::BetScene()
-: _currentPageType(Type::NonePage)
-, _previousPageType(Type::NonePage)
-, _nextPageType(Type::NonePage)
 {
 }
 
@@ -40,79 +38,14 @@ Control::Handler BetScene::onResolveCCBCCControlSelector(cocos2d::Object *pTarge
     CCLOG("name_control = %s", pSelectorName);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedPreviousButton", BetScene::tappedPreviousButton);
     CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedNextButton", BetScene::tappedNextButton);
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedSelectButton", BetScene::tappedSelectButton);
-    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedHatenaButton", BetScene::tappedHatenaButton);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedEditBetButton", BetScene::tappedEditBetButton);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedSettingButton", BetScene::tappedSettingButton);
+    CCB_SELECTORRESOLVER_CCCONTROL_GLUE(this, "tappedFixedButton", BetScene::tappedFixedButton);
     return NULL;
 }
 
 void BetScene::initScene() {
-    // update funcをスケジュールに登録
-    _addNumericEditBox();
-    _currentPageType = Type::SelectRouletteTypePage;
-    _updateView(_currentPageType);
-}
-
-void BetScene::_updateView(Type::BetScenePage pageType){
-    _clearView();
-    
-    auto title = (LabelTTF*) this->getChildByTag(NodeTag_BetScene::Header)->getChildByTag(NodeTag_Header::TiteLabel);
-    auto backButton = (LabelTTF*) this->getChildByTag(NodeTag_BetScene::Header)->getChildByTag(NodeTag_Header::BackButton);
-    backButton->cocos2d::Node::setVisible(true);
-    auto desc  = (LabelTTF*) this->getChildByTag(NodeTag_BetScene::TitleLabel);
-    
-    const char* titleTex;
-    const char* descTex;
-    const char** buttonTexList;
-    int elementNum;
-    
-    if(pageType == Type::SelectRouletteTypePage) {
-        titleTex = Text_BetScene::title_rouletteType;
-        descTex  = Text_BetScene::desc_rouretteType;
-        buttonTexList = Text_List::rouletteType;
-        elementNum    = Type::RouletteTypeNum;
-        _nextPageType = Type::SelectMinBetPage;
-    } else if (pageType == Type::SelectMethodPage) {
-        titleTex = Text_BetScene::title_betMethod;
-        descTex  = Text_BetScene::desc_betMethod;
-        buttonTexList = Text_List::method;
-        elementNum    = Type::MethodNum;
-    } else if (pageType == Type::SelectMinBetPage) {
-        titleTex = Text_BetScene::title_minBet;
-        descTex  = Text_BetScene::desc_minBet;
-        buttonTexList = NULL;
-        _nextPageType = Type::SelectMethodPage;
-        
-        _setUpEditBox(Text_EditBox::placeHolder_MinBet);
-    } else if (pageType == Type::SelectZonePage) {
-        titleTex = Text_BetScene::title_betZone;
-        descTex  = Text_BetScene::desc_betZone;
-        buttonTexList = Text_List::zone;
-        elementNum    = Type::ZoneNum;
-    } else {
-        titleTex = "none";
-        descTex  = "node";
-        buttonTexList = NULL;
-        elementNum    = 0;
-    }
-    _previousPageType = _currentPageType;
-    _currentPageType  = pageType;
-    
-    title->setString(titleTex);
-    desc->setString(descTex);
-    if(buttonTexList != NULL) {
-        for (int i = 0; i < MAX_BUTTON_NUM; i++) {
-            auto buttonNode = this->getChildByTag(NodeTag_BetScene::ButtonNode+i);
-            auto button = (ControlButton*) buttonNode->getChildByTag(NodeTag_BetScene::SelectButton);
-            auto hatena = (ControlButton*) buttonNode->getChildByTag(NodeTag_BetScene::HatenaButton);
-            auto label = (LabelTTF*) buttonNode->getChildByTag(NodeTag_BetScene::ButtonLabel);
-            if (i < elementNum) {
-                label->setString(buttonTexList[i]);
-                buttonNode->setVisible(true);
-                button->setVisible(true);
-                hatena->setVisible(true);
-            }
-        }
-    }
+    _updateView();
 }
 
 void BetScene::tappedNextButton(Object* pSender, Control::EventType pControlEventType)
@@ -127,124 +60,48 @@ void BetScene::tappedPreviousButton(Object* pSender, Control::EventType pControl
     CCLOG("tappedPreviousButton eventType = %d", pControlEventType);
     AudioManager::playTapEffect();
     auto mainScene = (BetScene*) this->getParent(); // because this node is header.
-    if (mainScene->getPreviousPageType() == Type::NonePage) {
         auto director = Director::getInstance();
         director->popScene();
-    } else {
-        mainScene->_updateView(mainScene->getPreviousPageType());
-    }
 }
 
-void BetScene::tappedSelectButton(Object* pSender, Control::EventType pControlEventType)
+void BetScene::tappedEditBetButton(Object* pSender, Control::EventType pControlEventType)
 {
-    CCLOG("tappedSelectButton eventType = %d", pControlEventType);
+    CCLOG("tappedEditBetButton eventType = %d", pControlEventType);
     ControlButton *button = (ControlButton*) pSender;
-    int pushedID = button->getParent()->getTag() - NodeTag_BetScene::ButtonNode;
+    int pushedID = button->getParent()->getTag() - NodeTag_BetScene::BetLayerNode;
     
-    if (_currentPageType == Type::SelectRouletteTypePage) {
-        GameController::getInstance()->setRouletteType((Type::RouletteType)pushedID);
-        _updateView(_nextPageType);
-    } else if (_currentPageType == Type::SelectMethodPage) {
-        float a = GameController::getInstance()->getMinBetCoin();
-        CCLOG("test is %f",a);
-        
-    } else if (_currentPageType == Type::SelectMinBetPage) {
-        auto editBox = (EditBox*) this->getChildByTag(NodeTag_BetScene::EditBox);
-        const char* minBet = editBox->getText();
-        if (Utility::isDecimalValue(minBet)) {
-            GameController::getInstance()->setMinBetCoin(atof(minBet));
-            _updateView(_nextPageType);
-        } else {
-            CCLOG("input value is not decimal.");
-        }
-    } else if (_currentPageType == Type::SelectZonePage) {
-        
-    } else {
-        
-    }
-
-    
-    /*
-    _currentPage = ((BetScene*) this->getParent())->getCurrentPage();
-    CCLOG("tappedStageButton eventType = %d", pControlEventType);
-    CCLOG("selectedStage is %d-%d", _currentPage, stageNo);
-    if (_calcPointConsumption(stageNo)) {
-        AudioManager::stopBackGroundMusic();
-        AudioManager::playEffect(AudioManager::battleStartEffectFile);
-        _selectedStageID = _getStageID(_currentPage, stageNo);
-        BetScene *ssl = (BetScene*) this->getParent();
-        ssl->setSelectedStageID(_selectedStageID);
-        ssl->getAnimationManager()->runAnimationsForSequenceNamedTweenDuration("default", 0);
-        _setBetSceneTuchEnable(false);
-    }
-     */
 }
 
-void BetScene::tappedHatenaButton(Object* pSender, Control::EventType pControlEventType)
+void BetScene::tappedSettingButton(Object* pSender, Control::EventType pControlEventType)
 {
-    CCLOG("tappedHatenaButton eventType = %d", pControlEventType);
+    CCLOG("tappedSettingButton eventType = %d", pControlEventType);
+    ControlButton *button = (ControlButton*) pSender;
+    int pushedID = button->getParent()->getTag() - NodeTag_BetScene::BetLayerNode;
+    
+}
+
+void BetScene::tappedFixedButton(Object* pSender, Control::EventType pControlEventType)
+{
+    CCLOG("tappedFixedButton eventType = %d", pControlEventType);
     ControlButton *button = (ControlButton*) pSender;
     button->setEnabled(true);
     int stageNo = button->getParent()->getTag() - 100;
 }
 
-void BetScene::_addNumericEditBox() {
-    auto firstButtonNode  = this->getChildByTag(NodeTag_BetScene::ButtonNode);
-    auto firstbutton = (ControlButton*) firstButtonNode->getChildByTag(NodeTag_BetScene::SelectButton);
-    
-    Size size = Size(firstbutton->getContentSize().width, 0.7 * firstbutton->getContentSize().height);
-    auto editBox = EditBox::create(size, Scale9Sprite::create(Text_EditBox::spriteFileName));
-    editBox->setPlaceHolder(Text_EditBox::placeHolder_MinBet);
-    editBox->setMaxLength(8);
-    editBox->setReturnType(KeyboardReturnType::DONE);
-    editBox->setInputMode(EditBox::InputMode::NUMERIC);
-    editBox->setDelegate((EditBoxDelegate*)this);
-    editBox->setPosition(firstbutton->getPosition());
-    editBox->setFontColor(Color3B(0,0,0));
-    editBox->setTag(NodeTag_BetScene::EditBox);
-    this->addChild(editBox);
-    
-    _setUpEditBox("");
-}
-
-void BetScene::_clearView() {
-    auto editBox = this->getChildByTag(NodeTag_BetScene::EditBox);
-    editBox->setVisible(false);
-    
-    auto headerNode = this->getChildByTag(NodeTag_BetScene::Header);
-    auto nextButton = headerNode->getChildByTag(NodeTag_Header::NextButton);
-    auto backButton = headerNode->getChildByTag(NodeTag_Header::BackButton);
-    nextButton->setVisible(false);
-    backButton->setVisible(false);
-    
-    for (int i = 0; i < MAX_BUTTON_NUM; i++) {
-        auto buttonNode = this->getChildByTag(NodeTag_BetScene::ButtonNode+i);
-        buttonNode->setVisible(false);
+void BetScene::_updateView() {
+    for (int i = 0; i < BET_SLOT_NUM; i++) {
+        auto betNode = this->getChildByTag(NodeTag_BetScene::BetLayerNode+i);
+        auto methodLabel = (LabelTTF*) betNode->getChildByTag(NodeTag_BetScene::MethodLabel);
+        auto zoneLabel = (LabelTTF*) betNode->getChildByTag(NodeTag_BetScene::ZoneLabel);
+        auto coinLabel = (LabelTTF*) betNode->getChildByTag(NodeTag_BetScene::CoinLabel);
+        auto winrateLabel = (LabelTTF*) betNode->getChildByTag(NodeTag_BetScene::WinRateLabel);
+        auto incomeLabel = (LabelTTF*) betNode->getChildByTag(NodeTag_BetScene::IncomeLabel);
+        
+        BetMethodModel* model = GameController::getInstance()->getMethodModelAt(i);
+        methodLabel->setString(model->getBetMethodStr());
+        zoneLabel->setString(model->getCurrentBetZoneStr());
+        coinLabel->setString(model->getRecomendBetCoinStr());
+        winrateLabel->setString(model->getWinRateStr());
+        incomeLabel->setString(model->getIncomeStr());
     }
-}
-
-void BetScene::_setUpEditBox(const char* placeHolder) {
-    auto editBox = (EditBox*) this->getChildByTag(NodeTag_BetScene::EditBox);
-    if (editBox == NULL) {
-        CCLOG("not found editBox node...");
-        _addNumericEditBox();
-        return;
-    }
-
-    editBox->setVisible(true);
-    editBox->setPlaceHolder(placeHolder);
-    
-    auto firstButtonNode  = this->getChildByTag(NodeTag_BetScene::ButtonNode);
-    auto secondButtonNode = this->getChildByTag(NodeTag_BetScene::ButtonNode + 1);
-    firstButtonNode->setVisible(true);
-    secondButtonNode->setVisible(true);
-    
-    auto firstbutton = (ControlButton*) firstButtonNode->getChildByTag(NodeTag_BetScene::SelectButton);
-    auto secondHatenaButton = (ControlButton*) secondButtonNode->getChildByTag(NodeTag_BetScene::HatenaButton);
-    auto secondSelectButton = (ControlButton*) secondButtonNode->getChildByTag(NodeTag_BetScene::SelectButton);
-    auto secondButtonLabel = (LabelTTF*) secondButtonNode->getChildByTag(NodeTag_BetScene::ButtonLabel);
-    firstbutton->setVisible(false);
-    secondHatenaButton->setVisible(false);
-    secondSelectButton->setVisible(true);
-    secondButtonLabel->setString(Text_EditBox::submit);
 }

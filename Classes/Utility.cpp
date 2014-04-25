@@ -20,3 +20,10 @@ bool Utility::isDecimalValue(const char* text) {
     }
     return (i > 0) ? true : false;
 }
+
+const char* Utility::getStrFromFloatValue(float val) {
+    char str[256];
+    sprintf(str, "%.2f", val);
+    std::string result = str;
+    return result.c_str();
+}
