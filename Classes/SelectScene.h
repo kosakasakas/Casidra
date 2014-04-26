@@ -12,6 +12,7 @@
 #include "cocos2d.h"
 #include "cocos-ext.h"
 #include "Params.h"
+#include "BetMethodModel.h"
 #include <array>
 #include <iostream>
 
@@ -40,6 +41,7 @@ public:
     CC_SYNTHESIZE_READONLY(Type::SelectScenePageType, _nextPageType,     NextPageType);
     CC_SYNTHESIZE_READONLY(Type::SelectScenePageType, _previousPageType, PreviousPageType);
     CC_SYNTHESIZE_READONLY(int, _targetSlotId, TargetSlotId);
+    CC_SYNTHESIZE_READONLY(BetMethodModel*, _methodModelPool, MethodModelPool);
     
     virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(Object* pTarget, const char* pSelectorName);
     virtual Control::Handler onResolveCCBCCControlSelector(Object * pTarget, const char* pSelectorName);

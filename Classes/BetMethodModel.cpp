@@ -9,12 +9,12 @@
 #include "BetMethodModel.h"
 #include "GameController.h"
 #include "Utility.h"
+#include "Params.h"
 
 BetMethodModel::BetMethodModel()
 : _currentBetZone(Type::NoZone)
 , _startGameCount(0)
 , _currentBetCoin(0)
-, _previousBetCoin(0)
 , _income(0.0)
 , _winCount(0)
 , _isInitialized(false)
@@ -36,7 +36,6 @@ bool BetMethodModel::init() {
 void BetMethodModel::setUp(Type::BetZoneType betZone) {
     _currentBetZone = betZone;
     _currentBetCoin = GameController::getInstance()->getMinBetCoin();
-    _previousBetCoin = 0.0;
     _isInitialized = true;
 }
 
@@ -57,6 +56,7 @@ float BetMethodModel::getRecomendBetCoin() {
 void BetMethodModel::updateData(int number) {
     if (!_isInitialized) {
         CCLOG("please initialize method model.");
+        MessageBox(Text_BetScene::errorNotInitializedMethodDesc, Text_BetScene::errorNotInitializedMethodTitle);
         return;
     }
     
@@ -65,6 +65,7 @@ void BetMethodModel::updateData(int number) {
     } else {
         lose();
     }
+    _betCoinList.push_back(_currentBetCoin);
     _currentBetCoin = getRecomendBetCoin();
 }
 

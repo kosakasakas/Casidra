@@ -41,10 +41,10 @@ public:
     CC_SYNTHESIZE_READONLY(int, _startGameCount, StartGameCount);
     CC_SYNTHESIZE_READONLY(Type::MethodType, _methodType, MethodType);
     CC_SYNTHESIZE(float, _currentBetCoin, CurrentBetCoin);
-    CC_SYNTHESIZE_READONLY(float, _previousBetCoin, PreviousBetCoin);
     CC_SYNTHESIZE_READONLY(float, _income, Income);
     CC_SYNTHESIZE_READONLY(int, _winCount, WinCount);
     CC_SYNTHESIZE_READONLY(bool, _isInitialized, IsInitialized);
+    CC_SYNTHESIZE_READONLY(std::vector<float>, _betCoinList, BetCoinList);
     
     float getCurrentWinRate();
 };

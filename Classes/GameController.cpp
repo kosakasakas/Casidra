@@ -56,7 +56,7 @@ void GameController::_incrementGameCount() {
 }
 
 void GameController::_addResult(int number) {
-    _resultList.push_back(number);
+    _resultNumberList.push_back(number);
     _isCurrentGameEnded = true;
 }
 
@@ -67,7 +67,7 @@ void GameController::resetAll() {
 
 void GameController::resetGame() {
     _globalGameCount = 0;
-    _resultList.clear();
+    _resultNumberList.clear();
 }
 
 int GameController::getResultAt(int gamePoint) {
@@ -75,7 +75,7 @@ int GameController::getResultAt(int gamePoint) {
         return 0;
     }
     
-    return _resultList.at(gamePoint);
+    return _resultNumberList.at(gamePoint);
 }
 
 void GameController::endGame(int resultNumber) {

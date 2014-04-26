@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>D20B3F0A-C513-460F-9487-216AF4774157</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Casidra</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>A4B08B12-EB85-4CB2-BCE8-86BEE559CD06</key>
+		<string>https://github.com/kosakasakas/Casidra.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>proj.ios_mac/Casidra.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>A4B08B12-EB85-4CB2-BCE8-86BEE559CD06</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/kosakasakas/Casidra.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>A4B08B12-EB85-4CB2-BCE8-86BEE559CD06</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>A4B08B12-EB85-4CB2-BCE8-86BEE559CD06</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Casidra</string>
+		</dict>
+	</array>
+</dict>
+</plist>

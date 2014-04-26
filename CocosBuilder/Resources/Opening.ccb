@@ -5,7 +5,7 @@
 	<key>centeredOrigin</key>
 	<false/>
 	<key>currentResolution</key>
-	<integer>1</integer>
+	<integer>2</integer>
 	<key>currentSequenceId</key>
 	<integer>0</integer>
 	<key>fileType</key>
@@ -600,7 +600,7 @@
 						<key>value</key>
 						<array>
 							<real>50</real>
-							<real>16.895772933959961</real>
+							<real>17.520772933959961</real>
 							<integer>4</integer>
 						</array>
 					</dict>
@@ -889,6 +889,20 @@
 			<integer>568</integer>
 			<key>name</key>
 			<string>iPhone 5 Portrait</string>
+			<key>scale</key>
+			<real>1</real>
+			<key>width</key>
+			<integer>320</integer>
+		</dict>
+		<dict>
+			<key>centeredOrigin</key>
+			<false/>
+			<key>ext</key>
+			<string>iphone</string>
+			<key>height</key>
+			<integer>480</integer>
+			<key>name</key>
+			<string>iPhone Portrait</string>
 			<key>scale</key>
 			<real>1</real>
 			<key>width</key>

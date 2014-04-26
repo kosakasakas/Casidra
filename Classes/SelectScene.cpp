@@ -14,6 +14,7 @@
 #include "GameController.h"
 #include "Utility.h"
 #include "BetScene.h"
+#include "BetMethodModelFactory.h"
 
 USING_NS_CC;
 
@@ -96,6 +97,7 @@ void SelectScene::_updateView(Type::SelectScenePageType pageType){
         descTex = Text_SelectScene::desc_betMethod;
         buttonTexList = Text_List::method;
         elementNum = Type::MethodNum;
+        _previousPageType = Type::NonePage;
         _nextPageType = Type::SelectZonePage;
     } else if (pageType == Type::SelectMinBetPage) {
         titleTex = Text_SelectScene::title_minBet;
@@ -160,9 +162,11 @@ void SelectScene::tappedSelectButton(Object* pSender, Control::EventType pContro
         GameController::getInstance()->setRouletteType((Type::RouletteType)pushedID);
         _updateView(_nextPageType);
     } else if (_currentPageType == Type::SelectEditMethodPage) {
-        float a = GameController::getInstance()->getMinBetCoin();
-        CCLOG("test is %f",a);
-        
+        if (_methodModelPool != NULL) {
+            CC_SAFE_RELEASE(_methodModelPool);
+        }
+        _methodModelPool = BetMethodModelFactory::createBetMethodModel((Type::MethodType)pushedID);
+        _updateView(_nextPageType);
     } else if (_currentPageType == Type::SelectMinBetPage) {
         auto editBox = (EditBox*) this->getChildByTag(NodeTag_SelectScene::EditBox);
         const char* minBet = editBox->getText();

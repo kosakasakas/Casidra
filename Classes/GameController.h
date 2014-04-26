@@ -33,7 +33,7 @@ public:
     CC_SYNTHESIZE(int, _globalGameCount, GlobalGameCount);
     CC_SYNTHESIZE(float, _minBetCoint, MinBetCoin);
     CC_SYNTHESIZE(float, _currentAsset, CurrentAsset);
-    CC_SYNTHESIZE_READONLY(std::vector<int>, _resultList, ResultList);
+    CC_SYNTHESIZE_READONLY(std::vector<int>, _resultNumberList, ResultNumberList);
     CC_SYNTHESIZE_READONLY(bool, _isCurrentGameEnded, IsCurrentGameEnded);
     CC_SYNTHESIZE_READONLY(std::vector<BetMethodModel*>, _betMethodModelSlot, BetMethodModelSlot);
     
