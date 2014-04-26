@@ -77,17 +77,6 @@ void SelectScene::_updateView(Type::SelectScenePageType pageType){
         buttonTexList = Text_List::rouletteType;
         elementNum    = Type::RouletteTypeNum;
         _nextPageType = Type::SelectMinBetPage;
-    } else if (pageType == Type::SelectMethodPage) {
-        titleTex = Text_SelectScene::title_betMethod;
-        descTex  = Text_SelectScene::desc_betMethod;
-        buttonTexList = Text_List::method;
-        elementNum    = Type::MethodNum;
-    } else if (pageType == Type::SelectMinBetPage) {
-        titleTex = Text_SelectScene::title_minBet;
-        descTex  = Text_SelectScene::desc_minBet;
-        buttonTexList = NULL;
-        _nextPageType = Type::SelectMethodPage;
-        _setUpEditBox(Text_EditBox::placeHolder_MinBet);
     } else if (pageType == Type::SelectZonePage) {
         titleTex = Text_SelectScene::title_betZone;
         descTex  = Text_SelectScene::desc_betZone;
@@ -102,6 +91,18 @@ void SelectScene::_updateView(Type::SelectScenePageType pageType){
         char str[16];
         sprintf(str,"%s,%.1f",Text_EditBox::placeHolder_editBet, method->getRecomendBetCoin());
         _setUpEditBox(str);
+    } else if (pageType == Type::SelectEditMethodPage) {
+        titleTex = Text_SelectScene::title_betMethod;
+        descTex = Text_SelectScene::desc_betMethod;
+        buttonTexList = Text_List::method;
+        elementNum = Type::MethodNum;
+        _nextPageType = Type::SelectZonePage;
+    } else if (pageType == Type::SelectMinBetPage) {
+        titleTex = Text_SelectScene::title_minBet;
+        descTex = Text_SelectScene::desc_minBet;
+        buttonTexList = NULL;
+        _nextPageType = Type::MainPage;
+        _setUpEditBox(Text_EditBox::placeHolder_MinBet);
     } else {
         titleTex = "none";
         descTex  = "node";
@@ -158,7 +159,7 @@ void SelectScene::tappedSelectButton(Object* pSender, Control::EventType pContro
     if (_currentPageType == Type::SelectRouletteTypePage) {
         GameController::getInstance()->setRouletteType((Type::RouletteType)pushedID);
         _updateView(_nextPageType);
-    } else if (_currentPageType == Type::SelectMethodPage) {
+    } else if (_currentPageType == Type::SelectEditMethodPage) {
         float a = GameController::getInstance()->getMinBetCoin();
         CCLOG("test is %f",a);
         

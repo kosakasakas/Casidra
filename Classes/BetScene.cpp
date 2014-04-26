@@ -82,8 +82,8 @@ void BetScene::tappedSettingButton(Object* pSender, Control::EventType pControlE
 {
     CCLOG("tappedSettingButton eventType = %d", pControlEventType);
     ControlButton *button = (ControlButton*) pSender;
-    int pushedID = button->getParent()->getTag() - NodeTag_BetScene::BetLayerNode;
-    
+    int slotId = button->getParent()->getTag() - NodeTag_BetScene::BetLayerNode;
+    pushSceneToEditMethodScene(slotId);
 }
 
 void BetScene::tappedFixedButton(Object* pSender, Control::EventType pControlEventType)
@@ -126,5 +126,20 @@ void BetScene::pushSceneToEditBetScene(int slotId) {
     }
     ccbReader->release();
     director->pushScene(scene);
+}
 
+void BetScene::pushSceneToEditMethodScene(int slotId) {
+    auto director = Director::getInstance();
+    NodeLoaderLibrary* nodeLoaderLibrary = NodeLoaderLibrary::getInstance();
+    nodeLoaderLibrary->registerNodeLoader("SelectScene", BetSceneLoader::loader());
+    CCBReader* ccbReader = new CCBReader(nodeLoaderLibrary);
+    Node* node = ccbReader->readNodeGraphFromFile("SelectScene.ccbi");
+    ((SelectScene*)node)->initScene(Type::SelectEditMethodPage, slotId);
+    Scene* scene = Scene::create();
+    if (node != NULL)
+    {
+        scene->addChild(node);
+    }
+    ccbReader->release();
+    director->pushScene(scene);
 }

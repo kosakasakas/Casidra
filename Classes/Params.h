@@ -33,7 +33,7 @@ namespace Text_SelectScene {
 namespace Text_List {
     static const char* rouletteType[] = {"アメリカン", "ヨーロピアン"};
     static const char* rouletteTypeDesc[] = {"アメリカンは0と00があるやつ", "ヨーロピアンは0のみ"};
-    static const char* method[] = {"モンテカルロ法", "ウィナーズ投資法", "未設定"};
+    static const char* method[] = {"モンテカルロ法", "ウィナーズ投資法", "設定しない"};
     static const char* methodDesc[] = {"モンテカルロ法ってのは。。", "ウィナーズ投資法ってのは。。", ""};
     static const char* zone[] = {"赤", "黒", "ハイ", "ロー", "奇数", "偶数", "1~12", "13~24",
         "25~36", "列1", "列2", "列3", "未設定"};
@@ -54,7 +54,7 @@ namespace Text_Config {
 }
 // BetScene
 namespace Text_BetScene {
-    static const char* errorNotInitializedMethodTitle = "手法が未設定";
+    static const char* errorNotInitializedMethodTitle = "手法が未設定です";
     static const char* errorNotInitializedMethodDesc = "設定からメソッドを設定して下さい。";
 }
 
@@ -96,7 +96,6 @@ namespace Type {
     // SelectScenePage
     enum SelectScenePageType {
         SelectRouletteTypePage,
-        SelectMethodPage,
         SelectZonePage,
         SelectMinBetPage,
         SelectEditBetPage,
