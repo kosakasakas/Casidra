@@ -17,7 +17,15 @@ GameController::GameController()
 : _rouletteType(Type::American)
 , _minBetCoint(1.0)
 , _isCurrentGameEnded(false)
+, _globalGameCount(0)
+, _currentAsset(0.0)
 {
+    // 一個目はデフォルトモンテカルロ
+    /*BetMethodModel* model = BetMethodModelFactory::createBetMethodModel(Type::MonteCarlo);
+    model->retain();
+    _betMethodModelSlot.push_back(model);*/
+    
+    // 残りは未設定
     for (int i = 0; i < BET_SLOT_NUM; i++) {
         BetMethodModel* model = new BetMethodModel();
         model->retain();
@@ -27,6 +35,10 @@ GameController::GameController()
 
 GameController::~GameController()
 {
+    std::vector<BetMethodModel*>::iterator it;
+    for(it=_betMethodModelSlot.begin(); it!=_betMethodModelSlot.end(); ++it){
+        CC_SAFE_RELEASE(*it);
+    }
 }
 
 GameController* GameController::getInstance()
@@ -35,6 +47,7 @@ GameController* GameController::getInstance()
     {
         _singleton = new GameController();
     }
+    
     return _singleton;
 }
 
@@ -75,7 +88,7 @@ void GameController::startGame() {
     _isCurrentGameEnded = false;
 }
 
-void GameController::setNewMethodModel(int slotNo, Type::Method method) {
+void GameController::setNewMethodModel(int slotNo, Type::MethodType method) {
     if (!_isValidSlot(slotNo)) {
         return;
     }

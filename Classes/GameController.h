@@ -42,7 +42,7 @@ public:
     int getResultAt(int gamecount);
     void startGame();
     void endGame(int resultNumber);
-    void setNewMethodModel(int slopNo, Type::Method method);
+    void setNewMethodModel(int slopNo, Type::MethodType method);
     BetMethodModel* getMethodModelAt(int slotID);
 };
 

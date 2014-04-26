@@ -14,6 +14,7 @@
 #include "GameController.h"
 #include "Utility.h"
 #include "BetMethodModel.h"
+#include "SelectScene.h"
 
 USING_NS_CC;
 
@@ -68,8 +69,13 @@ void BetScene::tappedEditBetButton(Object* pSender, Control::EventType pControlE
 {
     CCLOG("tappedEditBetButton eventType = %d", pControlEventType);
     ControlButton *button = (ControlButton*) pSender;
-    int pushedID = button->getParent()->getTag() - NodeTag_BetScene::BetLayerNode;
-    
+    int slotID = button->getParent()->getTag() - NodeTag_BetScene::BetLayerNode;
+    Type::MethodType method = GameController::getInstance()->getMethodModelAt(slotID)->getMethodType();
+    if (method == Type::NoneMethod) {
+        MessageBox(Text_BetScene::errorNotInitializedMethodDesc, Text_BetScene::errorNotInitializedMethodTitle);
+        return;
+    }
+    pushSceneToEditBetScene(slotID);
 }
 
 void BetScene::tappedSettingButton(Object* pSender, Control::EventType pControlEventType)
@@ -104,4 +110,21 @@ void BetScene::_updateView() {
         winrateLabel->setString(model->getWinRateStr());
         incomeLabel->setString(model->getIncomeStr());
     }
+}
+
+void BetScene::pushSceneToEditBetScene(int slotId) {
+    auto director = Director::getInstance();
+    NodeLoaderLibrary* nodeLoaderLibrary = NodeLoaderLibrary::getInstance();
+    nodeLoaderLibrary->registerNodeLoader("SelectScene", BetSceneLoader::loader());
+    CCBReader* ccbReader = new CCBReader(nodeLoaderLibrary);
+    Node* node = ccbReader->readNodeGraphFromFile("SelectScene.ccbi");
+    ((SelectScene*)node)->initScene(Type::SelectEditBetPage, slotId);
+    Scene* scene = Scene::create();
+    if (node != NULL)
+    {
+        scene->addChild(node);
+    }
+    ccbReader->release();
+    director->pushScene(scene);
+
 }

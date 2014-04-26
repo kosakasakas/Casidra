@@ -15,7 +15,7 @@
 
 class BetMethodModelFactory {
 public:
-    static BetMethodModel* createBetMethodModel(Type::Method method);
+    static BetMethodModel* createBetMethodModel(Type::MethodType method);
 };
 
 #endif /* defined(__Casidra__BetMethodModelFactory__) */

@@ -41,6 +41,9 @@ public:
     void tappedFixedButton(Object* pSender,   Control::EventType pControlEventType);
     
     CCB_STATIC_NEW_AUTORELEASE_OBJECT_WITH_INIT_METHOD(BetScene, create);
+    
+    void pushSceneToEditBetScene(int slotId);
+    void pushSceneToEditMethodScene(int slotId);
 };
 
 //

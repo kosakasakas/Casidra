@@ -25,7 +25,7 @@ class SelectScene : public Layer
 , public CCBSelectorResolver
 {
 private:
-    void _updateView(Type::SelectScenePage pageType);
+    void _updateView(Type::SelectScenePageType pageType);
     void _clearView();
     void _addNumericEditBox();
     void _setUpEditBox(const char* placeHolder);
@@ -33,11 +33,13 @@ private:
 public:
     SelectScene();
     virtual ~SelectScene();
-    void initScene(); // ccbiをreadした後によぶこと！
+    void initScene(Type::SelectScenePageType pageType); // ccbiをreadした後によぶこと！
+    void initScene(Type::SelectScenePageType pageType, int slotId);
     
-    CC_SYNTHESIZE_READONLY(Type::SelectScenePage, _currentPageType,  CurrentPageType);
-    CC_SYNTHESIZE_READONLY(Type::SelectScenePage, _nextPageType,     NextPageType);
-    CC_SYNTHESIZE_READONLY(Type::SelectScenePage, _previousPageType, PreviousPageType);
+    CC_SYNTHESIZE_READONLY(Type::SelectScenePageType, _currentPageType,  CurrentPageType);
+    CC_SYNTHESIZE_READONLY(Type::SelectScenePageType, _nextPageType,     NextPageType);
+    CC_SYNTHESIZE_READONLY(Type::SelectScenePageType, _previousPageType, PreviousPageType);
+    CC_SYNTHESIZE_READONLY(int, _targetSlotId, TargetSlotId);
     
     virtual SEL_MenuHandler onResolveCCBCCMenuItemSelector(Object* pTarget, const char* pSelectorName);
     virtual Control::Handler onResolveCCBCCControlSelector(Object * pTarget, const char* pSelectorName);

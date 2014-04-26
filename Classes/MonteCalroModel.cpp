@@ -19,24 +19,41 @@ MonteCalroModel::~MonteCalroModel()
 }
 
 bool MonteCalroModel::init() {
-    if (!Node::init()) {
+    if (!BetMethodModel::init()) {
         return false;
     }
-    
-    _currentBetCoin = GameController::getInstance()->getMinBetCoin();
+    _currentBetZone = Type::Red;
+    _isInitialized = true;
     return true;
 }
 
-std::vector<Type::BetZone> MonteCalroModel::getBetableZone() {
-    std::vector<Type::BetZone> vec;
+MonteCalroModel* MonteCalroModel::create()
+{
+    auto p = new MonteCalroModel();
+    if(p && p->init()){
+        p->autorelease();
+        return p;
+    }
+    CC_SAFE_DELETE(p);
+    return NULL;
+}
+
+std::vector<Type::BetZoneType> MonteCalroModel::getBetableZone() {
+    std::vector<Type::BetZoneType> vec;
+    vec.push_back(Type::Red);
+    vec.push_back(Type::Black);
+    vec.push_back(Type::Hight);
+    vec.push_back(Type::Low);
+    vec.push_back(Type::Odd);
+    vec.push_back(Type::Even);
     return vec;
 }
 
 float MonteCalroModel::getRecomendBetCoin() {
-    if (!_isInialized) {
-        CCLOG("please initialize method model.");
-        return 0.0;
-    }
     
     return GameController::getInstance()->getMinBetCoin();
+}
+
+const char* MonteCalroModel::getBetMethodStr() {
+    return Text_List::method[Type::MonteCarlo];
 }

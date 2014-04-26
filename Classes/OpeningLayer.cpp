@@ -75,7 +75,7 @@ void OpeningLayer::startRealGameScene() {
     nodeLoaderLibrary->registerNodeLoader("SelectScene", SelectSceneLoader::loader());
     CCBReader* ccbReader = new CCBReader(nodeLoaderLibrary);
     Node* node = ccbReader->readNodeGraphFromFile("SelectScene.ccbi");
-    ((SelectScene*)node)->initScene();
+    ((SelectScene*)node)->initScene(Type::SelectRouletteTypePage);
     Scene* scene = Scene::create();
     if (node != NULL)
     {

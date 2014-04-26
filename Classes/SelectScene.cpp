@@ -46,14 +46,19 @@ Control::Handler SelectScene::onResolveCCBCCControlSelector(cocos2d::Object *pTa
     return NULL;
 }
 
-void SelectScene::initScene() {
+void SelectScene::initScene(Type::SelectScenePageType pageType) {
     // update funcをスケジュールに登録
     _addNumericEditBox();
-    _currentPageType = Type::SelectRouletteTypePage;
+    _currentPageType = pageType;
     _updateView(_currentPageType);
 }
 
-void SelectScene::_updateView(Type::SelectScenePage pageType){
+void SelectScene::initScene(Type::SelectScenePageType pageType, int slotId) {
+    initScene(pageType);
+    _targetSlotId = slotId;
+}
+
+void SelectScene::_updateView(Type::SelectScenePageType pageType){
     _clearView();
     
     auto title = (LabelTTF*) this->getChildByTag(NodeTag_SelectScene::Header)->getChildByTag(NodeTag_Header::TiteLabel);
@@ -82,13 +87,21 @@ void SelectScene::_updateView(Type::SelectScenePage pageType){
         descTex  = Text_SelectScene::desc_minBet;
         buttonTexList = NULL;
         _nextPageType = Type::SelectMethodPage;
-        
         _setUpEditBox(Text_EditBox::placeHolder_MinBet);
     } else if (pageType == Type::SelectZonePage) {
         titleTex = Text_SelectScene::title_betZone;
         descTex  = Text_SelectScene::desc_betZone;
         buttonTexList = Text_List::zone;
         elementNum    = Type::ZoneNum;
+    } else if (pageType == Type::SelectEditBetPage) {
+        titleTex = Text_SelectScene::title_editBet;
+        descTex = Text_SelectScene::desc_editBet;
+        buttonTexList = NULL;
+        _nextPageType = Type::MainPage;
+        auto method = GameController::getInstance()->getMethodModelAt(_targetSlotId);
+        char str[16];
+        sprintf(str,"%s,%.1f",Text_EditBox::placeHolder_editBet, method->getRecomendBetCoin());
+        _setUpEditBox(str);
     } else {
         titleTex = "none";
         descTex  = "node";
@@ -154,32 +167,26 @@ void SelectScene::tappedSelectButton(Object* pSender, Control::EventType pContro
         const char* minBet = editBox->getText();
         if (Utility::isDecimalValue(minBet)) {
             GameController::getInstance()->setMinBetCoin(atof(minBet));
-            //_updateView(_nextPageType);
+            replaceSceneToBetScene();
+        } else {
+            CCLOG("input value is not decimal.");
+            MessageBox(Text_EditBox::errorDescNotDecimal, Text_EditBox::errorTitle);
+        }
+    } else if (_currentPageType == Type::SelectZonePage) {
+        
+    } else if (_currentPageType == Type::SelectEditBetPage) {
+        auto editBox = (EditBox*) this->getChildByTag(NodeTag_SelectScene::EditBox);
+        const char* bet = editBox->getText();
+        if (Utility::isDecimalValue(bet)) {
+            auto model = GameController::getInstance()->getMethodModelAt(_targetSlotId);
+            model->setCurrentBetCoin(atof(bet));
             replaceSceneToBetScene();
         } else {
             CCLOG("input value is not decimal.");
         }
-    } else if (_currentPageType == Type::SelectZonePage) {
-        
     } else {
         
     }
-
-    
-    /*
-    _currentPage = ((SelectScene*) this->getParent())->getCurrentPage();
-    CCLOG("tappedStageButton eventType = %d", pControlEventType);
-    CCLOG("selectedStage is %d-%d", _currentPage, stageNo);
-    if (_calcPointConsumption(stageNo)) {
-        AudioManager::stopBackGroundMusic();
-        AudioManager::playEffect(AudioManager::battleStartEffectFile);
-        _selectedStageID = _getStageID(_currentPage, stageNo);
-        SelectScene *ssl = (SelectScene*) this->getParent();
-        ssl->setSelectedStageID(_selectedStageID);
-        ssl->getAnimationManager()->runAnimationsForSequenceNamedTweenDuration("default", 0);
-        _setSelectSceneTuchEnable(false);
-    }
-     */
 }
 
 void SelectScene::tappedHatenaButton(Object* pSender, Control::EventType pControlEventType)
@@ -197,7 +204,7 @@ void SelectScene::_addNumericEditBox() {
     Size size = Size(firstbutton->getContentSize().width, 0.7 * firstbutton->getContentSize().height);
     auto editBox = EditBox::create(size, Scale9Sprite::create(Text_EditBox::spriteFileName));
     editBox->setPlaceHolder(Text_EditBox::placeHolder_MinBet);
-    editBox->setMaxLength(8);
+    editBox->setMaxLength(16);
     editBox->setReturnType(KeyboardReturnType::DONE);
     editBox->setInputMode(EditBox::InputMode::NUMERIC);
     editBox->setDelegate((EditBoxDelegate*)this);

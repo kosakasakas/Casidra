@@ -11,13 +11,14 @@
 #include "Utility.h"
 
 BetMethodModel::BetMethodModel()
-: _isInialized(false)
+: _currentBetZone(Type::NoZone)
 , _startGameCount(0)
-, _currentBetCoin(0.0)
-, _oldBetCoin(0.0)
-, _winCount(0)
-, _currentBetZone(Type::NoZone)
+, _currentBetCoin(0)
+, _previousBetCoin(0)
 , _income(0.0)
+, _winCount(0)
+, _isInitialized(false)
+, _methodType(Type::NoneMethod)
 {
 }
 
@@ -29,16 +30,14 @@ bool BetMethodModel::init() {
     if (!Node::init()) {
         return false;
     }
-    
-    _currentBetCoin = GameController::getInstance()->getMinBetCoin();
     return true;
 }
 
-void BetMethodModel::setUp(Type::BetZone betZone) {
+void BetMethodModel::setUp(Type::BetZoneType betZone) {
     _currentBetZone = betZone;
     _currentBetCoin = GameController::getInstance()->getMinBetCoin();
-    _oldBetCoin = 0.0;
-    _isInialized = true;
+    _previousBetCoin = 0.0;
+    _isInitialized = true;
 }
 
 float BetMethodModel::getCurrentWinRate() {
@@ -46,22 +45,17 @@ float BetMethodModel::getCurrentWinRate() {
     return (gameCount == 0) ? 0.0 : (float) _winCount / (float) gameCount;
 }
 
-std::vector<Type::BetZone> BetMethodModel::getBetableZone() {
-    std::vector<Type::BetZone> vec;
+std::vector<Type::BetZoneType> BetMethodModel::getBetableZone() {
+    std::vector<Type::BetZoneType> vec;
     return vec;
 }
 
 float BetMethodModel::getRecomendBetCoin() {
-    if (!_isInialized) {
-        CCLOG("please initialize method model.");
-        return 0.0;
-    }
-    
-    return GameController::getInstance()->getMinBetCoin();
+    return 0.0; // you have to overrride this method.
 }
 
 void BetMethodModel::updateData(int number) {
-    if (!_isInialized) {
+    if (!_isInitialized) {
         CCLOG("please initialize method model.");
         return;
     }
@@ -71,9 +65,10 @@ void BetMethodModel::updateData(int number) {
     } else {
         lose();
     }
+    _currentBetCoin = getRecomendBetCoin();
 }
 
-bool BetMethodModel::isWinning(Type::BetZone betZone, int number) {
+bool BetMethodModel::isWinning(Type::BetZoneType betZone, int number) {
     int* checkList;
     int num;
     if (betZone == Type::Red) {
@@ -99,7 +94,7 @@ bool BetMethodModel::isWinning(Type::BetZone betZone, int number) {
 }
 
 void BetMethodModel::win() {
-    
+    ++_winCount;
 }
 
 void BetMethodModel::lose() {
@@ -113,11 +108,11 @@ const char* BetMethodModel::getWinRateStr() {
     return  Utility::getStrFromFloatValue(getCurrentWinRate());
 }
 const char* BetMethodModel::getCurrentBetZoneStr() {
-    return Text_Config::notInitialized;
+    return Text_List::zone[_currentBetZone];
 }
 const char* BetMethodModel::getIncomeStr() {
     return Utility::getStrFromFloatValue(_income);
 }
 const char* BetMethodModel::getRecomendBetCoinStr() {
-    return Utility::getStrFromFloatValue(getRecomendBetCoin());
+    return Utility::getStrFromFloatValue(_currentBetCoin);
 }

@@ -23,10 +23,11 @@ public:
     MonteCalroModel();
     virtual ~MonteCalroModel();
     virtual bool init();
-    CREATE_FUNC(MonteCalroModel);
+    static MonteCalroModel* create();
     
-    virtual std::vector<Type::BetZone> getBetableZone();
-    virtual float getRecomendBetCoin();
+    const char* getBetMethodStr();
+    std::vector<Type::BetZoneType> getBetableZone();
+    float getRecomendBetCoin();
 };
 
 #endif /* defined(__Casidra__BetModel__) */

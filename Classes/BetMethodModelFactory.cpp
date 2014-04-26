@@ -7,11 +7,12 @@
 //
 
 #include "BetMethodModelFactory.h"
+#include "MonteCalroModel.h"
 
-BetMethodModel* BetMethodModelFactory::createBetMethodModel(Type::Method method) {
+BetMethodModel* BetMethodModelFactory::createBetMethodModel(Type::MethodType method) {
     BetMethodModel* model;
     if (method == Type::MonteCarlo) {
-        model = BetMethodModel::create();
+        model = MonteCalroModel::create();
     } else {
         model = BetMethodModel::create();
     }

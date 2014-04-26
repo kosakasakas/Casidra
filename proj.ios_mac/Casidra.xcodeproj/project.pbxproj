@@ -414,36 +414,76 @@
 			path = Classes;
 			sourceTree = "<group>";
 		};
-		15AA9C4015B7EC450033D6C2 /* Classes */ = {
+		14327E81190A5F140043533F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				14A18A5C1908B8C7006610DD /* BetMethodModelFactory.cpp */,
+				14A18A5D1908B8C7006610DD /* BetMethodModelFactory.h */,
 				14327E77190A577D0043533F /* MonteCalroModel.cpp */,
 				14327E78190A577D0043533F /* MonteCalroModel.h */,
-				14A18A671909542E006610DD /* BetScene.cpp */,
-				14A18A681909542E006610DD /* BetScene.h */,
-				145D323E1907F8910067B357 /* GameController.cpp */,
-				145D323F1907F8910067B357 /* GameController.h */,
-				145D323B1907EF2A0067B357 /* UserData.cpp */,
-				145D323C1907EF2A0067B357 /* UserData.h */,
-				145D32381907EEBF0067B357 /* AudioManager.cpp */,
-				145D32391907EEBF0067B357 /* AudioManager.h */,
-				145D32041907B8130067B357 /* AppMacros.h */,
 				145D32051907B8130067B357 /* BetMethodModel.cpp */,
 				145D32061907B8130067B357 /* BetMethodModel.h */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		14327E82190A5F220043533F /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				145D323E1907F8910067B357 /* GameController.cpp */,
+				145D323F1907F8910067B357 /* GameController.h */,
+			);
+			name = Controller;
+			sourceTree = "<group>";
+		};
+		14327E83190A5F330043533F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				14A18A671909542E006610DD /* BetScene.cpp */,
+				14A18A681909542E006610DD /* BetScene.h */,
 				145D32071907B8130067B357 /* OpeningLayer.cpp */,
 				145D32081907B8130067B357 /* OpeningLayer.h */,
 				145D320C1907B8130067B357 /* SelectScene.cpp */,
 				145D320D1907B8130067B357 /* SelectScene.h */,
+			);
+			name = View;
+			sourceTree = "<group>";
+		};
+		14327E84190A5F670043533F /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				145D32041907B8130067B357 /* AppMacros.h */,
 				145D320E1907B8130067B357 /* Params.h */,
 				145D32361907C6A00067B357 /* NodeTag.h */,
+			);
+			name = Config;
+			sourceTree = "<group>";
+		};
+		14327E85190A5F840043533F /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				145D323B1907EF2A0067B357 /* UserData.cpp */,
+				145D323C1907EF2A0067B357 /* UserData.h */,
+				145D32381907EEBF0067B357 /* AudioManager.cpp */,
+				145D32391907EEBF0067B357 /* AudioManager.h */,
+				145D32331907C11B0067B357 /* Utility.cpp */,
+				145D32341907C11B0067B357 /* Utility.h */,
+			);
+			name = Utility;
+			sourceTree = "<group>";
+		};
+		15AA9C4015B7EC450033D6C2 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				14327E85190A5F840043533F /* Utility */,
+				14327E83190A5F330043533F /* View */,
+				14327E82190A5F220043533F /* Controller */,
+				14327E81190A5F140043533F /* Model */,
+				14327E84190A5F670043533F /* Config */,
 				1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */,
 				1AFAF8B416D35DE700DB1158 /* AppDelegate.h */,
 				1AFAF8B516D35DE700DB1158 /* HelloWorldScene.cpp */,
 				1AFAF8B616D35DE700DB1158 /* HelloWorldScene.h */,
-				145D32331907C11B0067B357 /* Utility.cpp */,
-				145D32341907C11B0067B357 /* Utility.h */,
-				14A18A5C1908B8C7006610DD /* BetMethodModelFactory.cpp */,
-				14A18A5D1908B8C7006610DD /* BetMethodModelFactory.h */,
 			);
 			name = Classes;
 			path = ../classes;
