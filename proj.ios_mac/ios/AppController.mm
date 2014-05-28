@@ -3,6 +3,9 @@
 #import "cocos2d.h"
 #import "AppDelegate.h"
 #import "RootViewController.h"
+#import "GPPURLHandler.h"
+#import "GooglePlusSignInViewController.h"
+#import "TestViewController.h"
 
 @implementation AppController
 
@@ -32,17 +35,25 @@ static AppDelegate s_sharedApplication;
     viewController = [[RootViewController alloc] initWithNibName:nil bundle:nil];
     viewController.wantsFullScreenLayout = YES;
     viewController.view = __glView;
-
+    
+    GooglePlusSignInViewController* googleView = [[GooglePlusSignInViewController alloc] initWithNibName:@"GooglePlusSignInViewController" bundle:nil];
+    //viewController.view = (UIView*) googleView;
+    
+    TestViewController* tvc = [[TestViewController alloc] initWithNibName:@"TestViewController" bundle:nil];
+    //viewController = (UIViewController*) tvc;
+    
     // Set RootViewController to window
     if ( [[UIDevice currentDevice].systemVersion floatValue] < 6.0)
     {
         // warning: addSubView doesn't work on iOS6
         [window addSubview: viewController.view];
+        [window addSubview: googleView.view];
     }
     else
     {
         // use this method on ios6
         [window setRootViewController:viewController];
+        [window setRootViewController:googleView];
     }
     
     [window makeKeyAndVisible];
@@ -54,6 +65,14 @@ static AppDelegate s_sharedApplication;
     return YES;
 }
 
+- (BOOL)application: (UIApplication *)application
+            openURL: (NSURL *)url
+  sourceApplication: (NSString *)sourceApplication
+         annotation: (id)annotation {
+    return [GPPURLHandler handleURL:url
+                  sourceApplication:sourceApplication
+                         annotation:annotation];
+}
 
 - (void)applicationWillResignActive:(UIApplication *)application {
     /*
