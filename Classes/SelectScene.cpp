@@ -197,7 +197,6 @@ void SelectScene::tappedSelectButton(Object* pSender, Control::EventType pContro
             CCLOG("input value is not decimal.");
         }
     } else if (_currentPageType == Type::SelectZonePage) {
-        GameController::getInstance()->setNewMethodModel(pushedID, <#Type::MethodType method#>)
     } else {
         
     }
