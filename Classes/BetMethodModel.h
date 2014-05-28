@@ -28,13 +28,15 @@ public:
     CREATE_FUNC(BetMethodModel);
     
     virtual void setUp(Type::BetZoneType betZone);
-    virtual std::vector<Type::BetZoneType> getBetableZone();
+    virtual void setBetableZoneList();
     virtual float getRecomendBetCoin();
     virtual const char* getBetMethodStr();
     virtual const char* getWinRateStr();
     virtual const char* getCurrentBetZoneStr();
     virtual const char* getRecomendBetCoinStr();
     virtual const char* getIncomeStr();
+    virtual const char** getBetableBetZoneStr();
+    virtual int getBetableBetZoneNum();
     void updateData(int number);
     
     CC_SYNTHESIZE_READONLY(Type::BetZoneType, _currentBetZone, CurrentBetZone);
@@ -45,6 +47,7 @@ public:
     CC_SYNTHESIZE_READONLY(int, _winCount, WinCount);
     CC_SYNTHESIZE_READONLY(bool, _isInitialized, IsInitialized);
     CC_SYNTHESIZE_READONLY(std::vector<float>, _betCoinList, BetCoinList);
+    CC_SYNTHESIZE_READONLY(Type::BetZoneCategory, _betZoneCategory, BetZoneCategory);
     
     float getCurrentWinRate();
 };

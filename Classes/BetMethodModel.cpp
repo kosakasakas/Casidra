@@ -19,6 +19,7 @@ BetMethodModel::BetMethodModel()
 , _winCount(0)
 , _isInitialized(false)
 , _methodType(Type::NoneMethod)
+, _betZoneCategory(Type::NoBetCategory)
 {
 }
 
@@ -30,7 +31,12 @@ bool BetMethodModel::init() {
     if (!Node::init()) {
         return false;
     }
+    setBetableZoneList();
     return true;
+}
+
+// hove to override this method.
+void BetMethodModel::setBetableZoneList() {
 }
 
 void BetMethodModel::setUp(Type::BetZoneType betZone) {
@@ -42,11 +48,6 @@ void BetMethodModel::setUp(Type::BetZoneType betZone) {
 float BetMethodModel::getCurrentWinRate() {
     int gameCount = GameController::getInstance()->getGlobalGameCount() - _startGameCount;
     return (gameCount == 0) ? 0.0 : (float) _winCount / (float) gameCount;
-}
-
-std::vector<Type::BetZoneType> BetMethodModel::getBetableZone() {
-    std::vector<Type::BetZoneType> vec;
-    return vec;
 }
 
 float BetMethodModel::getRecomendBetCoin() {
@@ -105,15 +106,27 @@ void BetMethodModel::lose() {
 const char* BetMethodModel::getBetMethodStr() {
     return Text_Config::notInitialized;
 }
+
 const char* BetMethodModel::getWinRateStr() {
     return  Utility::getStrFromFloatValue(getCurrentWinRate());
 }
+
 const char* BetMethodModel::getCurrentBetZoneStr() {
-    return Text_List::zone[_currentBetZone];
+    return Text_List::zoneNone[0];
 }
+
 const char* BetMethodModel::getIncomeStr() {
     return Utility::getStrFromFloatValue(_income);
 }
+
 const char* BetMethodModel::getRecomendBetCoinStr() {
     return Utility::getStrFromFloatValue(_currentBetCoin);
+}
+
+const char** BetMethodModel::getBetableBetZoneStr() {
+    return Text_List::zoneNone;
+}
+
+int BetMethodModel::getBetableBetZoneNum() {
+    return 1;
 }

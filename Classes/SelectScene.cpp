@@ -23,6 +23,7 @@ SelectScene::SelectScene()
 : _currentPageType(Type::NonePage)
 , _previousPageType(Type::NonePage)
 , _nextPageType(Type::NonePage)
+, _methodModelPool(NULL)
 {
 }
 
@@ -62,6 +63,9 @@ void SelectScene::initScene(Type::SelectScenePageType pageType, int slotId) {
 void SelectScene::_updateView(Type::SelectScenePageType pageType){
     _clearView();
     
+    _previousPageType = _currentPageType;
+    _currentPageType  = pageType;
+    
     auto title = (LabelTTF*) this->getChildByTag(NodeTag_SelectScene::Header)->getChildByTag(NodeTag_Header::TiteLabel);
     auto backButton = (LabelTTF*) this->getChildByTag(NodeTag_SelectScene::Header)->getChildByTag(NodeTag_Header::BackButton);
     backButton->cocos2d::Node::setVisible(true);
@@ -81,8 +85,12 @@ void SelectScene::_updateView(Type::SelectScenePageType pageType){
     } else if (pageType == Type::SelectZonePage) {
         titleTex = Text_SelectScene::title_betZone;
         descTex  = Text_SelectScene::desc_betZone;
-        buttonTexList = Text_List::zone;
-        elementNum    = Type::ZoneNum;
+        auto model = GameController::getInstance()->getMethodModelAt(_targetSlotId);
+        elementNum = model->getBetableBetZoneNum();
+        CCLOG("element %d",elementNum);
+        buttonTexList = model->getBetableBetZoneStr();
+        _nextPageType = Type::NonePage;
+        CCLOG("element is %s",buttonTexList[0]);
     } else if (pageType == Type::SelectEditBetPage) {
         titleTex = Text_SelectScene::title_editBet;
         descTex = Text_SelectScene::desc_editBet;
@@ -111,8 +119,6 @@ void SelectScene::_updateView(Type::SelectScenePageType pageType){
         buttonTexList = NULL;
         elementNum    = 0;
     }
-    _previousPageType = _currentPageType;
-    _currentPageType  = pageType;
     
     title->setString(titleTex);
     desc->setString(descTex);
@@ -147,6 +153,7 @@ void SelectScene::tappedPreviousButton(Object* pSender, Control::EventType pCont
     if (mainScene->getPreviousPageType() == Type::NonePage) {
         auto director = Director::getInstance();
         director->popScene();
+        CCLOG("called previous button but not pop");
     } else {
         mainScene->_updateView(mainScene->getPreviousPageType());
     }
@@ -189,6 +196,8 @@ void SelectScene::tappedSelectButton(Object* pSender, Control::EventType pContro
         } else {
             CCLOG("input value is not decimal.");
         }
+    } else if (_currentPageType == Type::SelectZonePage) {
+        GameController::getInstance()->setNewMethodModel(pushedID, <#Type::MethodType method#>)
     } else {
         
     }

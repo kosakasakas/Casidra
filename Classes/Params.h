@@ -35,8 +35,13 @@ namespace Text_List {
     static const char* rouletteTypeDesc[] = {"アメリカンは0と00があるやつ", "ヨーロピアンは0のみ"};
     static const char* method[] = {"モンテカルロ法", "ウィナーズ投資法", "設定しない"};
     static const char* methodDesc[] = {"モンテカルロ法ってのは。。", "ウィナーズ投資法ってのは。。", ""};
-    static const char* zone[] = {"赤", "黒", "ハイ", "ロー", "奇数", "偶数", "1~12", "13~24",
-        "25~36", "列1", "列2", "列3", "未設定"};
+    static const char* zoneEvenBet[] = {"赤", "黒", "ハイ", "ロー", "奇数", "偶数", "35カ所", "未設定"};
+    static const char* zoneTwiceBet[] = {"1~12", "13~24",　"25~36", "列1", "列2", "列3", "未設定"};
+    static const char* zoneTirtyFiveBet[] = {"35カ所", "未設定"};
+    static const char* zoneNone[] = {"未設定"};
+    static int zoneEvenBetNum = 7;
+    static int zoneTwiceBetNum = 7;
+    static int zoneTirtyFiveBetNum = 2;
 }
 // EditBox
 namespace Text_EditBox {
@@ -59,11 +64,25 @@ namespace Text_BetScene {
 }
 
 //
+// BetZoneIds
+//
+namespace TypeList {
+    static int evenBet[] = {0, 1, 2, 3, 4, 5};
+    static int evenBetNum = 6;
+    static int twiceBet[] = {6,7,8,9,10,11};
+    static int twiceBetNum = 6;
+    static int tirtyFiveBet[] = {12};
+    static int tirtyFiveBetNum = 1;
+    static int noneBet[] = {13};
+    static int noneBetNum = 1;
+}
+
+//
 // Types
 //
 
-// BetZone
 namespace Type {
+    // BetZone
     enum BetZoneType {
         Red,
         Black,
@@ -77,8 +96,17 @@ namespace Type {
         Column1,
         Column2,
         Column3,
+        TirtyFive,
         NoZone,
         ZoneNum
+    };
+    // ZoneCategory
+    enum BetZoneCategory {
+        EvenBet,
+        TwiceBet,
+        TirtyFiveBet,
+        NoBetCategory,
+        BetCategoryNum
     };
     // RouletteType
     enum RouletteType {
